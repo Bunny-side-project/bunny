@@ -133,9 +133,7 @@ class Frame21 extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 13.9, 222),
                   child: Text(
-                    '홍길동 님의 기본급으로
-                지금 벌고 계신 돈을
-                 계산해볼게요!',
+                    '홍길동 님의 기본급으로 지금 벌고 계신 돈을 계산해볼게요!',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Roboto Condensed',

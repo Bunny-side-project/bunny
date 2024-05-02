@@ -277,8 +277,7 @@ class Frame27 extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.fromLTRB(13.2, 0, 13.2, 0),
                                 child: Text(
-                                  '퇴근까지
-                              4시간 30분',
+                                  '퇴근까지 4시간 30분',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.getFont(
                                     'Roboto Condensed',

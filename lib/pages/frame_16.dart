@@ -156,7 +156,7 @@ class Frame16 extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 83),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(),
+                        // color: Color(),
                         gradient: LinearGradient(
                           begin: Alignment(0, -0.967),
                           end: Alignment(-1, 1),
@@ -2248,7 +2248,9 @@ class Frame16 extends StatelessWidget {
               right: 19.8,
               top: 217,
               child: Transform(
-                transform: Matrix4.identity()..rotationZ(0.866529995),
+                // transform: Matrix4.identity()..rotationZ(0.866529995),
+                transform: Matrix4.identity()..rotateZ(0.866529995),
+
                 child: Container(
                   width: 109.2,
                   height: 103.3,

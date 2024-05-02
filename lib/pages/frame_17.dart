@@ -133,8 +133,7 @@ class Frame17 extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 13.9, 44),
                   child: Text(
-                    '안녕하세요.
-                버니입니다.',
+                    '안녕하세요. 버니입니다.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Roboto Condensed',
@@ -160,8 +159,7 @@ class Frame17 extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 11.9, 6),
                   child: Text(
-                    '버니와 함께 지금 벌고 있는 돈을
-                확인해 볼까요?',
+                    '버니와 함께 지금 벌고 있는 돈을 확인해 볼까요?',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Roboto Condensed',

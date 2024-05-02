@@ -156,7 +156,7 @@ class Frame23 extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(),
+                        // color: Color(),
                         gradient: LinearGradient(
                           begin: Alignment(0, -0.967),
                           end: Alignment(-1, 1),
@@ -190,8 +190,7 @@ class Frame23 extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(0, 0, 0, 21),
                                     child: Text(
-                                      '‘아끼기’를 통해
-                                  습관적인 지출을 줄여보세요. ',
+                                      '‘아끼기’를 통해 습관적인 지출을 줄여보세요. ',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.getFont(
                                         'Roboto Condensed',
@@ -204,8 +203,7 @@ class Frame23 extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(15, 0, 0, 80),
                                     child: Text(
-                                      '불필요한 소비를 줄여/줄이고
-                                  토끼에게 밥을 주세요!',
+                                      '불필요한 소비를 줄여 토끼에게 밥을 주세요!',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.getFont(
                                         'Roboto Condensed',
@@ -364,7 +362,7 @@ class Frame23 extends StatelessWidget {
                               right: 19.8,
                               bottom: 32.7,
                               child: Transform(
-                                transform: Matrix4.identity()..rotationZ(0.866529995),
+                                transform: Matrix4.identity()..rotateZ(0.866529995),
                                 child: Container(
                                   width: 109.2,
                                   height: 103.3,
@@ -384,8 +382,7 @@ class Frame23 extends StatelessWidget {
                               child: SizedBox(
                                 height: 88,
                                 child: Text(
-                                  '아낀 만큼 버니에게
-                            당근을 줄 수 있어요',
+                                  '아낀 만큼 버니에게 당근을 줄 수 있어요',
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.getFont(
                                     'Roboto Condensed',
