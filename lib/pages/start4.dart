@@ -3,15 +3,22 @@ import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'start5.dart';
 
-class Frame21 extends StatelessWidget {
+class start4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
-      decoration: BoxDecoration(
-        color: Color(0xFFFFFFFF),
-      ),
+    return GestureDetector( // GestureDetector를 사용하여 화면 탭 이벤트 감지
+      onTap: () {
+        Navigator.push( // 화면을 탭하면 start5 페이지로 이동
+          context,
+          MaterialPageRoute(builder: (context) => start5()),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+        ),
       child: Stack(
         children: [
           Positioned(
@@ -71,7 +78,7 @@ class Frame21 extends StatelessWidget {
                                 width: 18,
                                 height: 12,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/icon_mobile_signal_2_x2.svg',
                                 ),
                               ),
                             ),
@@ -81,7 +88,7 @@ class Frame21 extends StatelessWidget {
                                 width: 17,
                                 height: 11.8,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/wifi_7_x2.svg',
                                 ),
                               ),
                             ),
@@ -118,7 +125,7 @@ class Frame21 extends StatelessWidget {
                                     width: 1.4,
                                     height: 4.2,
                                     child: SvgPicture.asset(
-                                      'assets/vectors/Unknown',
+                                      'assets/vectors/battery_end_3_x2.svg',
                                     ),
                                   ),
                                 ),
@@ -162,7 +169,7 @@ class Frame21 extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ),),
     );
   }
 }

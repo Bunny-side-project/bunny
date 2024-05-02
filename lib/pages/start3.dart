@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_app/pages/start4.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'start4.dart';
+import 'start2.dart';
 
-class Frame20 extends StatelessWidget {
+class start3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
-      decoration: BoxDecoration(
-        color: Color(0xFFFFFFFF),
-      ),
+    return SingleChildScrollView(
       child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+        ),
         padding: EdgeInsets.fromLTRB(24.5, 15, 11.6, 60),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -49,7 +51,7 @@ class Frame20 extends StatelessWidget {
                             width: 18,
                             height: 12,
                             child: SvgPicture.asset(
-                              'assets/vectors/Unknown',
+                              'assets/vectors/icon_mobile_signal_7_x2.svg',
                             ),
                           ),
                         ),
@@ -59,7 +61,7 @@ class Frame20 extends StatelessWidget {
                             width: 17,
                             height: 11.8,
                             child: SvgPicture.asset(
-                              'assets/vectors/Unknown',
+                              'assets/vectors/wifi_9_x2.svg',
                             ),
                           ),
                         ),
@@ -96,7 +98,7 @@ class Frame20 extends StatelessWidget {
                                 width: 1.4,
                                 height: 4.2,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/battery_end_1_x2.svg',
                                 ),
                               ),
                             ),
@@ -354,24 +356,34 @@ class Frame20 extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 14, 0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => start2()),
+                        );
+                      },
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFFCFCFCF),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+                        margin: EdgeInsets.fromLTRB(0, 0, 14, 0),
                         child: Container(
-                          padding: EdgeInsets.fromLTRB(1.1, 11, 0, 11),
-                          child: Text(
-                            '이전',
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              height: 1.4,
-                              letterSpacing: -0.5,
-                              color: Color(0xFFFFFFFF),
+                          width: 130,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFCFCFCF),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(45, 11, 0, 11),
+                            child: Text(
+                              '이전',
+                              style: GoogleFonts.getFont(
+                                'Roboto Condensed',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                height: 1.4,
+                                letterSpacing: -0.5,
+                                color: Color(0xFFFFFFFF),
+                              ),
                             ),
                           ),
                         ),
@@ -379,22 +391,35 @@ class Frame20 extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFF98A2FF),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => start4()),
+                        );
+                      },
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(1.1, 11, 0, 11),
-                        child: Text(
-                          '다음',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            height: 1.4,
-                            letterSpacing: -0.5,
-                            color: Color(0xFFFFFFFF),
+                        margin: EdgeInsets.fromLTRB(0, 0, 14, 0),
+                        child: Container(
+                          width: 130,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF98A2FF),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(45, 11, 0, 11),
+                            child: Text(
+                              '다음',
+                              style: GoogleFonts.getFont(
+                                'Roboto Condensed',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                height: 1.4,
+                                letterSpacing: -0.5,
+                                color: Color(0xFFFFFFFF),
+                              ),
+                            ),
                           ),
                         ),
                       ),

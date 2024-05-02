@@ -3,12 +3,12 @@ import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'start2.dart';
 
-class Frame17 extends StatelessWidget {
+class start1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: BoxDecoration(
         color: Color(0xFFFFFFFF),
       ),
@@ -34,7 +34,7 @@ class Frame17 extends StatelessWidget {
               ),
             ),
           ),
-    Container(
+          Container(
             padding: EdgeInsets.fromLTRB(24.5, 15, 11.6, 176),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +71,7 @@ class Frame17 extends StatelessWidget {
                                 width: 18,
                                 height: 12,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/icon_mobile_signal_1_x2.svg',
                                 ),
                               ),
                             ),
@@ -81,7 +81,7 @@ class Frame17 extends StatelessWidget {
                                 width: 17,
                                 height: 11.8,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/wifi_3_x2.svg',
                                 ),
                               ),
                             ),
@@ -97,7 +97,8 @@ class Frame17 extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     child: Container(
-                                      padding: EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
+                                      padding:
+                                          EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
                                       child: Text(
                                         '70',
                                         style: GoogleFonts.getFont(
@@ -118,7 +119,7 @@ class Frame17 extends StatelessWidget {
                                     width: 1.4,
                                     height: 4.2,
                                     child: SvgPicture.asset(
-                                      'assets/vectors/Unknown',
+                                      'assets/vectors/battery_end_5_x2.svg',
                                     ),
                                   ),
                                 ),
@@ -133,7 +134,7 @@ class Frame17 extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 13.9, 44),
                   child: Text(
-                    '안녕하세요. 버니입니다.',
+                    '안녕하세요.\n버니입니다.',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Roboto Condensed',
@@ -159,7 +160,7 @@ class Frame17 extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 11.9, 6),
                   child: Text(
-                    '버니와 함께 지금 벌고 있는 돈을 확인해 볼까요?',
+                    '버니와 함께 지금 벌고 있는 돈을\n확인해 볼까요?',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       'Roboto Condensed',
@@ -170,18 +171,34 @@ class Frame17 extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 2.9, 0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFFFFFFFF)),
-                    borderRadius: BorderRadius.circular(50),
-                    color: Color(0xFFFFFFFF),
+                SizedBox(
+                  height: 50.0,
+                ),
+                TextButton(
+                  onPressed: () {print("Button pressed");
+                    // Navigate to start2 page when button is pressed
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => start2()),
+                    );
+                  },
+                  style: ButtonStyle(
+                    // Define button style here
+                    backgroundColor:
+                        MaterialStateProperty.all(Color(0xFFFFFFFF)),
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 11)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50))),
+                    side: MaterialStateProperty.all(
+                        BorderSide(color: Color(0xFFFFFFFF))),
                   ),
                   child: Container(
-                    width: 140,
-                    padding: EdgeInsets.fromLTRB(0, 11, 0, 11),
+                    width: 120,
+                    padding: EdgeInsets.symmetric(vertical: 5),
                     child: Text(
                       '시작하기',
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.getFont(
                         'Roboto Condensed',
                         fontWeight: FontWeight.w700,

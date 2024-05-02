@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Frame23 extends StatelessWidget {
+class intro_save extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return 
@@ -54,7 +54,7 @@ class Frame23 extends StatelessWidget {
                                   width: 18,
                                   height: 12,
                                   child: SvgPicture.asset(
-                                    'assets/vectors/Unknown',
+                                    'assets/vectors/icon_mobile_signal_9_x2.svg',
                                   ),
                                 ),
                               ),
@@ -64,7 +64,7 @@ class Frame23 extends StatelessWidget {
                                   width: 17,
                                   height: 11.8,
                                   child: SvgPicture.asset(
-                                    'assets/vectors/Unknown',
+                                    'assets/vectors/wifi_5_x2.svg',
                                   ),
                                 ),
                               ),
@@ -101,7 +101,7 @@ class Frame23 extends StatelessWidget {
                                       width: 1.4,
                                       height: 4.2,
                                       child: SvgPicture.asset(
-                                        'assets/vectors/Unknown',
+                                        'assets/vectors/battery_end_8_x2.svg',
                                       ),
                                     ),
                                   ),
@@ -156,7 +156,7 @@ class Frame23 extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 2),
                     child: Container(
                       decoration: BoxDecoration(
-                        // color: Color(),
+                        //color: Color(),
                         gradient: LinearGradient(
                           begin: Alignment(0, -0.967),
                           end: Alignment(-1, 1),
@@ -261,7 +261,7 @@ class Frame23 extends StatelessWidget {
                                                         ],
                                                       ),
                                                       child: SvgPicture.asset(
-                                                        'assets/vectors/Unknown',
+                                                        'assets/vectors/union_1_x2.svg',
                                                       ),
                                                     ),
                                                   ],
@@ -297,7 +297,7 @@ class Frame23 extends StatelessWidget {
                                               width: 28,
                                               height: 26.5,
                                               child: SvgPicture.asset(
-                                                'assets/vectors/Unknown',
+                                                'assets/vectors/vector_2_x2.svg',
                                               ),
                                             ),
                                           ),
@@ -327,7 +327,7 @@ class Frame23 extends StatelessWidget {
                                   width: 106.4,
                                   height: 139.4,
                                   child: SvgPicture.asset(
-                                    'assets/vectors/Unknown',
+                                    'assets/vectors/container_2_x2.svg',
                                   ),
                                 ),
                               ),
@@ -342,7 +342,7 @@ class Frame23 extends StatelessWidget {
                                   width: 119,
                                   height: 54.7,
                                   child: SvgPicture.asset(
-                                    'assets/vectors/Unknown',
+                                    'assets/vectors/layer_12_x2.svg',
                                   ),
                                 ),
                               ),
@@ -354,7 +354,7 @@ class Frame23 extends StatelessWidget {
                                 width: 62.8,
                                 height: 85.1,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/container_x2.svg',
                                 ),
                               ),
                             ),
@@ -370,7 +370,7 @@ class Frame23 extends StatelessWidget {
                                     width: 109.2,
                                     height: 103.3,
                                     child: SvgPicture.asset(
-                                      'assets/vectors/Unknown',
+                                      'assets/vectors/layer_13_x2.svg',
                                     ),
                                   ),
                                 ),

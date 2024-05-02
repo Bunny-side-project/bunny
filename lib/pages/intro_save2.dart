@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Frame26 extends StatelessWidget {
+class intro_save2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return 
@@ -49,7 +49,7 @@ class Frame26 extends StatelessWidget {
                             width: 18,
                             height: 12,
                             child: SvgPicture.asset(
-                              'assets/vectors/Unknown',
+                              'assets/vectors/icon_mobile_signal_3_x2.svg',
                             ),
                           ),
                         ),
@@ -59,7 +59,7 @@ class Frame26 extends StatelessWidget {
                             width: 17,
                             height: 11.8,
                             child: SvgPicture.asset(
-                              'assets/vectors/Unknown',
+                              'assets/vectors/wifi_8_x2.svg',
                             ),
                           ),
                         ),
@@ -96,7 +96,7 @@ class Frame26 extends StatelessWidget {
                                 width: 1.4,
                                 height: 4.2,
                                 child: SvgPicture.asset(
-                                  'assets/vectors/Unknown',
+                                  'assets/vectors/battery_end_7_x2.svg',
                                 ),
                               ),
                             ),
@@ -180,16 +180,6 @@ class Frame26 extends StatelessWidget {
                       child: Container(
                         width: 55,
                         height: 55,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFD9D9D9),
-                            borderRadius: BorderRadius.circular(27.5),
-                          ),
-                          child: Container(
-                            width: 55,
-                            height: 55,
-                          ),
-                        ),
                       ),
                     ),
                     Container(
