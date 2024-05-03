@@ -54,7 +54,7 @@ class save extends StatelessWidget {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        bunny()),
+                                                        Bunny()),
                                               );
                                             },
                                             child: Container(
@@ -117,7 +117,7 @@ class save extends StatelessWidget {
                             ),
                             Positioned(
                               right: 0,
-                              bottom: 0,
+                              bottom: 10,
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Color(0xFF98A2FF),
@@ -498,7 +498,7 @@ class save extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.fromLTRB(0, 3, 8, 6),
+                                        margin: EdgeInsets.fromLTRB(0, 8, 8, 6),
                                         child: Container(
                                           decoration: BoxDecoration(
                                             color: Color(0xFF98A2FF),
@@ -512,7 +512,7 @@ class save extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.fromLTRB(0, 3, 0, 6),
+                                        margin: EdgeInsets.fromLTRB(0, 8, 0, 6),
                                         child: Container(
                                           decoration: BoxDecoration(
                                             color: Color(0xFF98A2FF),
@@ -583,7 +583,7 @@ class save extends StatelessWidget {
                                         ),
                                         Container(
                                           margin:
-                                              EdgeInsets.fromLTRB(0, 5, 8, 4),
+                                              EdgeInsets.fromLTRB(0, 8, 8, 4),
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Color(0xFFACD7FF),
@@ -598,7 +598,7 @@ class save extends StatelessWidget {
                                         ),
                                         Container(
                                           margin:
-                                              EdgeInsets.fromLTRB(0, 5, 8, 4),
+                                              EdgeInsets.fromLTRB(0, 8, 8, 4),
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Color(0xFFACD7FF),
@@ -613,7 +613,7 @@ class save extends StatelessWidget {
                                         ),
                                         Container(
                                           margin:
-                                              EdgeInsets.fromLTRB(0, 5, 0, 4),
+                                              EdgeInsets.fromLTRB(0, 8, 0, 4),
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Color(0xFFACD7FF),
@@ -688,7 +688,7 @@ class save extends StatelessWidget {
                                         ),
                                         Container(
                                           margin:
-                                              EdgeInsets.fromLTRB(0, 5, 0, 4),
+                                              EdgeInsets.fromLTRB(0, 8, 0, 4),
                                           child: Container(
                                             decoration: BoxDecoration(
                                               color: Color(0xFFDECDFF),

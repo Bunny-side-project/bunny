@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,8 +9,32 @@ import 'chart.dart';
 
 List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
 
-class bunny extends StatelessWidget {
+class Bunny extends StatefulWidget {
   @override
+  _BunnyState createState() => _BunnyState();
+}
+class _BunnyState extends State<Bunny> {
+  double percentage = 0;
+  @override
+
+  void initState() {
+    super.initState();
+    // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (percentage <= 100) {
+          percentage += 100/3600 ;
+          
+        } else {
+          // 만약 percentage가 100 이상이라면 타이머를 멈춥니다.
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
@@ -109,7 +134,7 @@ class bunny extends StatelessWidget {
                       ),
                       Positioned(
                         left: 0,
-                        bottom: 0,
+                        bottom: 10,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Color(0xFF98A2FF),
@@ -125,7 +150,7 @@ class bunny extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
+                margin: EdgeInsets.fromLTRB(32, 10, 32, 15),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Row(
@@ -168,8 +193,8 @@ class bunny extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(20, 20),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -186,14 +211,14 @@ class bunny extends StatelessWidget {
                     //   ),
                     // ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(45, 10, 13, 0),
+                      padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
 
                       child: CustomPaint(
                         // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
                         size: Size(
                             250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
                         painter: PieChart(
-                            percentage: 60, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                            percentage: percentage.toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
                             textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
                             textColor: Colors.blueGrey
                             ),
@@ -240,7 +265,7 @@ class bunny extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 1, 15),
+                            margin: EdgeInsets.fromLTRB(0, 10, 1, 15),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
@@ -248,7 +273,7 @@ class bunny extends StatelessWidget {
                               ),
                               child: Container(
                                 width: 160,
-                                padding: EdgeInsets.fromLTRB(40, 16, 12.8, 16),
+                                padding: EdgeInsets.fromLTRB(40, 18, 12.8, 16),
                                 child: RichText(
                                   text: TextSpan(
                                     text: '68,753',
@@ -515,8 +540,8 @@ class bunny extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -780,8 +805,8 @@ class bunny extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -1023,8 +1048,8 @@ class bunny extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
