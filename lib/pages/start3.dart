@@ -176,6 +176,7 @@ class start3 extends StatelessWidget {
                 ),
               ),
             ),
+
             Container(
               margin: EdgeInsets.fromLTRB(5.5, 0, 5.5, 9),
               child: Align(
@@ -191,6 +192,74 @@ class start3 extends StatelessWidget {
                 ),
               ),
             ),
+            // Container(
+            //   margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 28),
+            //   decoration: BoxDecoration(
+            //     border: Border.all(color: Color(0xFFE7E7E7)),
+            //     borderRadius: BorderRadius.circular(10),
+            //     color: Color(0xFFFFFFFF),
+            //   ),
+            //   child: Container(
+            //     padding: EdgeInsets.fromLTRB(15, 17, 15, 15),
+            //     child: Text(
+            //       '월급',
+            //       style: GoogleFonts.getFont(
+            //         'Roboto Condensed',
+            //         fontWeight: FontWeight.w500,
+            //         fontSize: 15,
+            //         color: Color(0xFF808080),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
+// Container(
+//                         margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 27),
+//                         child: Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Expanded(
+//                               child: Container(
+//                                 margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+//                                 decoration: BoxDecoration(
+//                                   border: Border.all(color: Color(0xFFE7E7E7)),
+//                                   borderRadius: BorderRadius.circular(10),
+//                                   color: Color(0xFFFFFFFF),
+//                                 ),
+//                                 height: 60,
+//                                 child: Container(
+//                                   padding: EdgeInsets.fromLTRB(18.4, 16, 6, 16),
+//                                   child: TextField(
+//                                     onChanged: (text) {
+//                                       // 입력 로직
+//                                     },
+//                                     style: GoogleFonts.getFont(
+//                                       'Roboto Condensed',
+//                                       fontWeight: FontWeight.w500,
+//                                       fontSize: 15,
+//                                       color: Color(0xFF808080),
+//                                     ),
+//                                     decoration: InputDecoration(
+//                                       border: InputBorder.none,
+//                                       contentPadding:
+//                                           EdgeInsets.symmetric(vertical: 8),
+//                                       hintText:
+//                                           '성별을 입력하세요.', // 사용자에게 힌트를 제공할 수 있습니다.
+//                                       hintStyle: GoogleFonts.getFont(
+//                                         'Roboto Condensed',
+//                                         fontWeight: FontWeight.w500,
+//                                         fontSize: 15,
+//                                         color: Color(0xFF808080),
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
             Container(
               margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 27),
               decoration: BoxDecoration(

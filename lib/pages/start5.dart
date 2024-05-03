@@ -361,7 +361,7 @@ class start5 extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => bunny()), // bunny 페이지로 이동
+                          builder: (context) => Bunny()), // bunny 페이지로 이동
                     );
                   },
                   child: Container(
