@@ -193,7 +193,7 @@ class bunny extends StatelessWidget {
                         size: Size(
                             250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
                         painter: PieChart(
-                            percentage: 60, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                            percentage: 80, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
                             textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
                             textColor: Colors.blueGrey
                             ),
