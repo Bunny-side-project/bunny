@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'bunny.dart';
+import 'dart:math';
+
 class save extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class save extends StatelessWidget {
           color: Color(0xFFFFFFFF),
         ),
         child: Container(
-          padding: EdgeInsets.fromLTRB(0, 15, 0, 27),
+          padding: EdgeInsets.fromLTRB(0, 14, 0, 12),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -24,101 +26,9 @@ class save extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(24.5, 0, 11.6, 32),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Text(
-                              '9:41',
-                              style: GoogleFonts.getFont(
-                                'Roboto Condensed',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 17,
-                                height: 1.3,
-                                letterSpacing: -0.4,
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 4, 0, 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 1, 8, 0),
-                                  child: SizedBox(
-                                    width: 18,
-                                    height: 12,
-                                    child: SvgPicture.asset(
-                                      'assets/vectors/icon_mobile_signal_4_x2.svg',
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 1, 7, 0.2),
-                                  child: SizedBox(
-                                    width: 17,
-                                    height: 11.8,
-                                    child: SvgPicture.asset(
-                                      'assets/vectors/wifi_6_x2.svg',
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF1C1C1E),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.fromLTRB(
-                                              7.4, 0, 7.4, 0),
-                                          child: Text(
-                                            '70',
-                                            style: GoogleFonts.getFont(
-                                              'Roboto Condensed',
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 10,
-                                              height: 1.3,
-                                              letterSpacing: 0.1,
-                                              color: Color(0xFFFFFFFF),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 5, 0, 3.8),
-                                      child: SizedBox(
-                                        width: 1.4,
-                                        height: 4.2,
-                                        child: SvgPicture.asset(
-                                          'assets/vectors/battery_end_2_x2.svg',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 28),
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 12),
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
@@ -129,7 +39,7 @@ class save extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
+                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 13),
                                     child: SizedBox(
                                       width: 213,
                                       child: Row(
@@ -148,11 +58,11 @@ class save extends StatelessWidget {
                                               );
                                             },
                                             child: Container(
-                                              height: 22,
+                                              // height: 22,
                                               margin: EdgeInsets.fromLTRB(
-                                                  0, 0, 12, 10),
+                                                  0, 40, 20, 10),
                                               child: SizedBox(
-                                                // width: 145.8,
+                                                // width: 140,
                                                 child: Text(
                                                   '버니',
                                                   style: GoogleFonts.getFont(
@@ -175,19 +85,20 @@ class save extends StatelessWidget {
                                               );
                                             },
                                             child: Container(
-                                              height: 22, 
-                                            margin:
-                                                EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                            child: Text(
-                                              '아끼기',
-                                              style: GoogleFonts.getFont(
-                                                'Inter',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 20,
-                                                color: Color(0xFF000000),
+                                              // height: 22,
+                                              margin: EdgeInsets.fromLTRB(
+                                                  10, 40, 0, 10),
+                                              child: Text(
+                                                '아끼기',
+                                                style: GoogleFonts.getFont(
+                                                  'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20,
+                                                  color: Color(0xFF000000),
+                                                ),
                                               ),
                                             ),
-                                          ),),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -884,11 +795,14 @@ class save extends StatelessWidget {
                                     margin: EdgeInsets.fromLTRB(0, 4, 0, 1.6),
                                     width: 8.2,
                                     height: 15.4,
-                                    child: SizedBox(
-                                      width: 8.2,
-                                      height: 15.4,
-                                      child: SvgPicture.asset(
-                                        'assets/vectors/vector_1_x2.svg',
+                                    child: Transform.rotate(
+                                      angle: pi,
+                                      child: SizedBox(
+                                        width: 8.2,
+                                        height: 15.4,
+                                        child: SvgPicture.asset(
+                                          'assets/vectors/vector_1_x2.svg',
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -2183,35 +2097,35 @@ class save extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                right: 59,
-                top: 194.8,
-                child: SizedBox(
-                  width: 62.8,
-                  height: 85.1,
-                  child: SvgPicture.asset(
-                    'assets/vectors/container_1_x2.svg',
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 19.8,
-                top: 217,
-                child: Transform(
-                  transform: Matrix4.identity()..rotateZ(0.866529995),
-                  child: Container(
-                    width: 109.2,
-                    height: 103.3,
-                    child: SizedBox(
-                      width: 109.2,
-                      height: 103.3,
-                      child: SvgPicture.asset(
-                        'assets/vectors/layer_11_x2.svg',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Positioned(
+              //   right: 59,
+              //   top: 194.8,
+              //   child: SizedBox(
+              //     width: 62.8,
+              //     height: 85.1,
+              //     child: SvgPicture.asset(
+              //       'assets/vectors/container_1_x2.svg',
+              //     ),
+              //   ),
+              // ),
+              // Positioned(
+              //   right: 19.8,
+              //   top: 217,
+              //   child: Transform(
+              //     transform: Matrix4.identity()..rotateZ(0.866529995),
+              //     child: Container(
+              //       width: 109.2,
+              //       height: 103.3,
+              //       child: SizedBox(
+              //         width: 109.2,
+              //         height: 103.3,
+              //         child: SvgPicture.asset(
+              //           'assets/vectors/layer_11_x2.svg',
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Positioned(
                 left: 39,
                 top: 176,

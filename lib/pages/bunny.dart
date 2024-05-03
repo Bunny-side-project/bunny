@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'save.dart';
+import 'chart.dart';
+
+List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
 
 class bunny extends StatelessWidget {
   @override
@@ -23,98 +26,13 @@ class bunny extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 32),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        '9:41',
-                        style: GoogleFonts.getFont(
-                          'Roboto Condensed',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 17,
-                          height: 1.3,
-                          letterSpacing: -0.4,
-                          color: Color(0xFF000000),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 4, 0, 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 1, 8, 0),
-                            child: SizedBox(
-                              width: 18,
-                              height: 12,
-                              child: SvgPicture.asset(
-                                'assets/vectors/icon_mobile_signal_6_x2.svg',
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 1, 7, 0.2),
-                            child: SizedBox(
-                              width: 17,
-                              height: 11.8,
-                              child: SvgPicture.asset(
-                                'assets/vectors/wifi_2_x2.svg',
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF1C1C1E),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
-                                    child: Text(
-                                      '70',
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 10,
-                                        height: 1.3,
-                                        letterSpacing: 0.1,
-                                        color: Color(0xFFFFFFFF),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 5, 0, 3.8),
-                                child: SizedBox(
-                                  width: 1.4,
-                                  height: 4.2,
-                                  child: SvgPicture.asset(
-                                    'assets/vectors/battery_end_9_x2.svg',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 32),
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                  // padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -134,8 +52,9 @@ class bunny extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      height: 22,
-                                      margin: EdgeInsets.fromLTRB(0, 8, 12, 0),
+                                      // height: 22,
+                                      margin:
+                                          EdgeInsets.fromLTRB(0, 18, 20, 10),
                                       child: SizedBox(
                                         // width: 145.8,
                                         child: Text(
@@ -158,8 +77,9 @@ class bunny extends StatelessWidget {
                                         );
                                       },
                                       child: Container(
-                                        height: 22,
-                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                        // height: 22,
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 10, 0, 10),
                                         child: Text(
                                           '아끼기',
                                           style: GoogleFonts.getFont(
@@ -265,6 +185,20 @@ class bunny extends StatelessWidget {
                     //     ),
                     //   ),
                     // ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(45, 10, 13, 0),
+
+                      child: CustomPaint(
+                        // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                        size: Size(
+                            250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                        painter: PieChart(
+                            percentage: 60, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                            textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
+                            textColor: Colors.blueGrey
+                            ),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.fromLTRB(12, 110, 13, 13),
                       child: Column(
