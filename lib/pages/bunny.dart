@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,37 +13,48 @@ import 'package:intl/intl.dart'; // 요일 DateFormat()
 
 List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
 
-// class bunny extends StatelessWidget {
-class bunny extends StatefulWidget {
+class Bunny extends StatefulWidget {
   // Stateless 위젯은 UI update 불가능함
   // State 클래스 통해 상태관리함, setState() 호출하여 UI 재구성하므로 계속 변경될 UI 부분은 setState() 사용 필요
 
-  bunny({Key? key}) : super(key: key);
+  Bunny({Key? key}) : super(key: key);
 
   @override
   _bunnyPageWidgetState createState() => _bunnyPageWidgetState();
 }
 
 // StatefulWidget 만들면서 class 추가 및 분리함
-class _bunnyPageWidgetState extends State<bunny> {
-  // '현재 시간' 표시 위한 변수
-  Timer? _timer;
+class _bunnyPageWidgetState extends State<Bunny> {
+  Timer? _timer;  // '현재 시간' 표시 위한 변수
   String _timeString = '';
   String _timeStringWeekday = '';
   String _timeStringDay = '';
   String _timeStringMonth = '';
+  double percentage = 0; // 타이머 위젯 
 
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
     super.initState();
     _timeString = _formatDateTime(DateTime.now());
-    // 추가
     _timeStringWeekday = _formatWeekday(DateTime.now());
     _timeStringDay = _formatDay(DateTime.now());
     _timeStringMonth = _formatMonth(DateTime.now());
     // _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime()); // 1초마다 _getTime() 호출하여 업데이트
     _timer = Timer.periodic(Duration(days: 1), (Timer t) => _getTime());
+
+    // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (percentage <= 100) {
+          percentage += 100/3600 ;
+          
+        } else {
+          // 만약 percentage가 100 이상이라면 타이머를 멈춥니다.
+          timer.cancel();
+        }
+      });
+    });
   }
 
   @override
@@ -87,6 +99,7 @@ class _bunnyPageWidgetState extends State<bunny> {
   String _formatMonth(DateTime monthTime) {
     return "${monthTime.month.toString().padLeft(2, '0')}";
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +201,7 @@ class _bunnyPageWidgetState extends State<bunny> {
                       ),
                       Positioned(
                         left: 0,
-                        bottom: 0,
+                        bottom: 10,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Color(0xFF98A2FF),
@@ -204,7 +217,7 @@ class _bunnyPageWidgetState extends State<bunny> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
+                margin: EdgeInsets.fromLTRB(32, 10, 32, 15),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Row(
@@ -249,8 +262,8 @@ class _bunnyPageWidgetState extends State<bunny> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(20, 20),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -267,13 +280,14 @@ class _bunnyPageWidgetState extends State<bunny> {
                     //   ),
                     // ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(45, 10, 13, 0),
+                      padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
+
                       child: CustomPaint(
                         // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
                         size: Size(
                             250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
                         painter: PieChart(
-                            percentage: 60, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                            percentage: percentage.toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
                             textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
                             textColor: Colors.blueGrey),
                       ),
@@ -319,7 +333,7 @@ class _bunnyPageWidgetState extends State<bunny> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 1, 15),
+                            margin: EdgeInsets.fromLTRB(0, 10, 1, 15),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
@@ -327,7 +341,7 @@ class _bunnyPageWidgetState extends State<bunny> {
                               ),
                               child: Container(
                                 width: 160,
-                                padding: EdgeInsets.fromLTRB(40, 16, 12.8, 16),
+                                padding: EdgeInsets.fromLTRB(40, 18, 12.8, 16),
                                 child: RichText(
                                   text: TextSpan(
                                     text: '68,753',
@@ -594,8 +608,8 @@ class _bunnyPageWidgetState extends State<bunny> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -860,8 +874,8 @@ class _bunnyPageWidgetState extends State<bunny> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
@@ -1103,8 +1117,8 @@ class _bunnyPageWidgetState extends State<bunny> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x0D000000),
-                      offset: Offset(0, 0),
-                      blurRadius: 4,
+                      offset: Offset(10, 10),
+                      blurRadius: 24,
                     ),
                   ],
                 ),
