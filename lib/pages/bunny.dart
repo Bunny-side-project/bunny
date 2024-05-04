@@ -7,18 +7,42 @@ import 'package:google_fonts/google_fonts.dart';
 import 'save.dart';
 import 'chart.dart';
 
+// 현재 시간 update 기능
+import 'dart:async';
+import 'package:intl/intl.dart'; // 요일 DateFormat()
+
 List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
 
 class Bunny extends StatefulWidget {
-  @override
-  _BunnyState createState() => _BunnyState();
-}
-class _BunnyState extends State<Bunny> {
-  double percentage = 0;
-  @override
+  // Stateless 위젯은 UI update 불가능함
+  // State 클래스 통해 상태관리함, setState() 호출하여 UI 재구성하므로 계속 변경될 UI 부분은 setState() 사용 필요
 
+  Bunny({Key? key}) : super(key: key);
+
+  @override
+  _bunnyPageWidgetState createState() => _bunnyPageWidgetState();
+}
+
+// StatefulWidget 만들면서 class 추가 및 분리함
+class _bunnyPageWidgetState extends State<Bunny> {
+  Timer? _timer;  // '현재 시간' 표시 위한 변수
+  String _timeString = '';
+  String _timeStringWeekday = '';
+  String _timeStringDay = '';
+  String _timeStringMonth = '';
+  double percentage = 0; // 타이머 위젯 
+
+  @override
   void initState() {
+    // 현재 시간을 가져와 문자열로 변환
     super.initState();
+    _timeString = _formatDateTime(DateTime.now());
+    _timeStringWeekday = _formatWeekday(DateTime.now());
+    _timeStringDay = _formatDay(DateTime.now());
+    _timeStringMonth = _formatMonth(DateTime.now());
+    // _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime()); // 1초마다 _getTime() 호출하여 업데이트
+    _timer = Timer.periodic(Duration(days: 1), (Timer t) => _getTime());
+
     // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -34,7 +58,50 @@ class _BunnyState extends State<Bunny> {
   }
 
   @override
-  
+  void dispose() {
+    // 타이머 취소하여 리소스 정리
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  // 현재 시간을 가져옴, 화면 표시 위해 setState() 호출, 시간문자열 update
+  void _getTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    final String formattedWeekday = _formatWeekday(now);
+    final String formattedDay = _formatDay(now);
+    final String formattedMonth = _formatMonth(now);
+
+    setState(() {
+      _timeString = formattedDateTime;
+      _timeStringWeekday = formattedWeekday;
+      _timeStringDay = formattedDay;
+      _timeStringMonth = formattedMonth;
+    });
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    // 초 단위로 가져옴
+    // return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}";
+    return "${dateTime.year}. ${dateTime.month.toString().padLeft(2, '0')}. ${dateTime.day.toString().padLeft(2, '0')}. ";
+  }
+
+  String _formatWeekday(DateTime weekday) {
+    String week_day =
+        DateFormat('EEEE', 'ko_KR').format(weekday); // 'EEEE'는 전체 요일 이름을 의미함
+    return "${week_day}";
+  }
+
+  String _formatDay(DateTime dayTime) {
+    return "${dayTime.day.toString().padLeft(2, '0')}";
+  }
+
+  String _formatMonth(DateTime monthTime) {
+    return "${monthTime.month.toString().padLeft(2, '0')}";
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
@@ -172,7 +239,9 @@ class _BunnyState extends State<Bunny> {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
                         child: Text(
-                          '2024. 05. 10. 금 ',
+                          // 날짜 부분: 실시간 값 반영되도록 변경함 
+                          // '2024. 05. 10. 금 ',
+                          _timeString + _timeStringWeekday,
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,
@@ -220,8 +289,7 @@ class _BunnyState extends State<Bunny> {
                         painter: PieChart(
                             percentage: percentage.toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
                             textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
-                            textColor: Colors.blueGrey
-                            ),
+                            textColor: Colors.blueGrey),
                       ),
                     ),
                     Container(
@@ -239,7 +307,7 @@ class _BunnyState extends State<Bunny> {
                                 Container(
                                   margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
                                   child: Text(
-                                    '5시간 30분',
+                                    '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
                                     style: GoogleFonts.getFont(
                                       'Roboto Condensed',
                                       fontWeight: FontWeight.w700,
@@ -251,7 +319,7 @@ class _BunnyState extends State<Bunny> {
                                 Container(
                                   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                   child: Text(
-                                    '퇴근까지 4시간 30분',
+                                    '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.getFont(
                                       'Roboto Condensed',
@@ -519,7 +587,7 @@ class _BunnyState extends State<Bunny> {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
                         child: Text(
-                          '금요일',
+                          _timeStringWeekday,
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,
@@ -784,7 +852,8 @@ class _BunnyState extends State<Bunny> {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
                         child: Text(
-                          '10일',
+                          _timeStringDay + '일',
+                          // '5월',
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,
@@ -1027,7 +1096,7 @@ class _BunnyState extends State<Bunny> {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
                         child: Text(
-                          '5월',
+                          _timeStringMonth + '월',
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,

@@ -10,9 +10,16 @@ import 'package:flutter_app/pages/intro_save.dart';
 import 'package:flutter_app/pages/intro_save2.dart';
 import 'package:flutter_app/pages/bunny.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
+
 // commit
 
-void main() => runApp(const MyApp());
+// void main() => runApp(const MyApp());
+void main() {  // 날짜 사용자 locale data 제공 위해 변경함
+  initializeDateFormatting().then((_) {
+    runApp(MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
