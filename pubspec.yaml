@@ -20,9 +20,11 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_svg: ^2.0.10+1
 
+
 flutter:
   uses-material-design: true
   assets:
+  - assets/bunnyIcons/Vector.svg
   - assets/images/free_icon_cloud_7280692.png
   - assets/vectors/group_260_x2.svg
   - assets/vectors/group_1561_x2.svg
