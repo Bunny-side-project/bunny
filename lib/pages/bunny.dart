@@ -25,12 +25,12 @@ class Bunny extends StatefulWidget {
 
 // StatefulWidget 만들면서 class 추가 및 분리함
 class _bunnyPageWidgetState extends State<Bunny> {
-  Timer? _timer;  // '현재 시간' 표시 위한 변수
+  Timer? _timer; // '현재 시간' 표시 위한 변수
   String _timeString = '';
   String _timeStringWeekday = '';
   String _timeStringDay = '';
   String _timeStringMonth = '';
-  double percentage = 0; // 타이머 위젯 
+  double percentage = 0; // 타이머 위젯
 
   @override
   void initState() {
@@ -47,8 +47,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if (percentage <= 100) {
-          percentage += 100/3600 ;
-          
+          percentage += 100 / 3600;
         } else {
           // 만약 percentage가 100 이상이라면 타이머를 멈춥니다.
           timer.cancel();
@@ -100,7 +99,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
     return "${monthTime.month.toString().padLeft(2, '0')}";
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -116,13 +114,37 @@ class _bunnyPageWidgetState extends State<Bunny> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 32),
+                margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 2),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start),
               ),
+              Row(
+                  // 아이콘 추가
+                  mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
+                  mainAxisSize: MainAxisSize.min, // 최소 크기 설정
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
+                      child: SvgPicture.asset(
+                        'assets/bunnyIcons/Vector.svg',
+                        width: 35,
+                        height: 39,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 120,
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0,25,0,0),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.menu),
+                          iconSize: 35),
+                    )
+                  ]),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: Container(
                   // padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
                   child: Stack(
@@ -135,7 +157,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
+                              // margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
                               child: SizedBox(
                                 width: 213,
                                 child: Row(
@@ -144,20 +166,18 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      // height: 22,
-                                      margin:
-                                          EdgeInsets.fromLTRB(0, 18, 20, 10),
+                                      // height: 30,
+                                      margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
                                       child: SizedBox(
                                         // width: 145.8,
-                                        child: Text(
-                                          '버니',
-                                          style: GoogleFonts.getFont(
-                                            'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 20,
-                                            color: Color(0xFF000000),
-                                          ),
-                                        ),
+                                        child: DefaultTextStyle(
+                                            style: GoogleFonts.getFont(
+                                              'Inter',
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20,
+                                              color: Color(0xFF000000),
+                                            ),
+                                            child: Text('버니')),
                                       ),
                                     ),
                                     TextButton(
@@ -173,7 +193,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         margin:
                                             EdgeInsets.fromLTRB(0, 10, 0, 10),
                                         child: Text(
-                                          '아끼기',
+                                          '아끼',
                                           style: GoogleFonts.getFont(
                                             'Inter',
                                             fontWeight: FontWeight.w600,
@@ -187,21 +207,21 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                 ),
                               ),
                             ),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //     color: Color(0xFFDDDDDD),
-                            //   ),
-                            //   child: Container(
-                            //     width: 360,
-                            //     height: 1,
-                            //   ),
-                            // ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDDDDDD),
+                              ),
+                              child: Container(
+                                width: 360,
+                                height: 1,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       Positioned(
                         left: 0,
-                        bottom: 10,
+                        top: 65,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Color(0xFF98A2FF),
@@ -226,29 +246,29 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: Text(
-                          '오늘의 버니',
+                        child: DefaultTextStyle(
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                             color: Color(0xFF262626),
                           ),
+                          child: Text('오늘의 버니'),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          // 날짜 부분: 실시간 값 반영되도록 변경함 
-                          // '2024. 05. 10. 금 ',
-                          _timeString + _timeStringWeekday,
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(_timeString + _timeStringWeekday
+                                // 날짜 부분: 실시간 값 반영되도록 변경함
+                                // '2024. 05. 10. 금 ',
+                                )),
                       ),
                     ],
                   ),
@@ -261,33 +281,24 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(20, 20),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
                 child: Stack(
                   children: [
-                    // Positioned(
-                    //   top: 20,
-                    //   child: SizedBox(
-                    //     width: 237,
-                    //     height: 237,
-                    //     child: SvgPicture.asset(
-                    //       'assets/vectors/group_43_x2.svg',
-                    //     ),
-                    //   ),
-                    // ),
                     Container(
                       padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
-
                       child: CustomPaint(
                         // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
                         size: Size(
                             250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
                         painter: PieChart(
-                            percentage: percentage.toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                            percentage: percentage
+                                .toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
                             textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
                             textColor: Colors.blueGrey),
                       ),
@@ -306,34 +317,36 @@ class _bunnyPageWidgetState extends State<Bunny> {
                               children: [
                                 Container(
                                   margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                  child: Text(
-                                    '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
-                                    style: GoogleFonts.getFont(
-                                      'Roboto Condensed',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 24,
-                                      color: Color(0xFF000000),
-                                    ),
-                                  ),
+                                  child: DefaultTextStyle(
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 24,
+                                        color: Color(0xFF000000),
+                                      ),
+                                      child: Text(
+                                        '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
+                                      )),
                                 ),
                                 Container(
                                   margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Text(
-                                    '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.getFont(
-                                      'Roboto Condensed',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Color(0xFF949494),
-                                    ),
-                                  ),
+                                  child: DefaultTextStyle(
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: Color(0xFF949494),
+                                      ),
+                                      child: Text(
+                                        '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
+                                      )),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 1, 15),
+                            margin: EdgeInsets.fromLTRB(0, 10, 0, 15),
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
@@ -380,8 +393,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(0, 7, 22.7, 13),
+                                      margin: EdgeInsets.fromLTRB(0, 7, 20, 13),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -391,15 +403,14 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 11, 0, 5.7, 6),
-                                            child: Text(
-                                              '초당',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Color(0xFF737373),
-                                              ),
-                                            ),
+                                            child: DefaultTextStyle(
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color: Color(0xFF737373),
+                                                ),
+                                                child: Text('초당')),
                                           ),
                                           RichText(
                                             text: TextSpan(
@@ -427,21 +438,12 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       ),
                                     ),
                                   ),
-                                  // Expanded(
-                                  //   child: Container(
-                                  //     margin:
-                                  //         EdgeInsets.fromLTRB(10, 0, 40, 0),
-                                  //     child: Container(
-                                  //       decoration: BoxDecoration(
-                                  //         color: Color(0xFFFFFFFF),
-                                  //       ),
-                                  //       child: Container(
-                                  //         width: 0.1,
-                                  //         height: 100,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Container(
+                                    width: 2,
+                                    height: 40,
+                                    margin: EdgeInsets.fromLTRB(0, 12, 5, 0),
+                                    color: Colors.white,
+                                  ),
                                   Expanded(
                                     child: Container(
                                       margin:
@@ -455,15 +457,14 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 9, 0, 3.2, 6),
-                                            child: Text(
-                                              '분당',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Color(0xFF737373),
-                                              ),
-                                            ),
+                                            child: DefaultTextStyle(
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color: Color(0xFF737373),
+                                                ),
+                                                child: Text('분당')),
                                           ),
                                           RichText(
                                             text: TextSpan(
@@ -491,21 +492,12 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       ),
                                     ),
                                   ),
-                                  // Expanded(
-                                  //   child: Container(
-                                  //     margin:
-                                  //         EdgeInsets.fromLTRB(40, 0, 10, 0),
-                                  //     child: Container(
-                                  //       decoration: BoxDecoration(
-                                  //         color: Color(0xFFFFFFFF),
-                                  //       ),
-                                  //       child: Container(
-                                  //         width: 0.1,
-                                  //         height: 100,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Container(
+                                    width: 2,
+                                    height: 40,
+                                    margin: EdgeInsets.fromLTRB(4, 12, 4, 0),
+                                    color: Colors.white,
+                                  ),
                                   Expanded(
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(0, 7, 0, 13),
@@ -518,14 +510,14 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 17, 0, 6.7, 6),
-                                            child: Text(
-                                              '시간당',
+                                            child: DefaultTextStyle(
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 13,
                                                 color: Color(0xFF737373),
                                               ),
+                                              child: Text('시간당'),
                                             ),
                                           ),
                                           RichText(
@@ -574,27 +566,29 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: Text(
-                          '이 주의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF262626),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF262626),
+                            ),
+                            child: Text(
+                              '이 주의 버니',
+                            )),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringWeekday,
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(
+                              _timeStringWeekday,
+                            )),
                       ),
                     ],
                   ),
@@ -607,9 +601,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
@@ -839,27 +834,27 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: Text(
-                          '이 달의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF262626),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF262626),
+                            ),
+                            child: Text('이 달의 버니')),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringDay + '일',
-                          // '5월',
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
                             color: Color(0xFFB7B7B7),
                           ),
+                          child: Text(_timeStringDay + '일'
+                              // '5월',
+                              ),
                         ),
                       ),
                     ],
@@ -873,9 +868,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
@@ -1083,27 +1079,25 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: Text(
-                          '올해의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF000000),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF000000),
+                            ),
+                            child: Text('올해의 버니')),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringMonth + '월',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(_timeStringMonth + '월')),
                       ),
                     ],
                   ),
@@ -1116,9 +1110,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
