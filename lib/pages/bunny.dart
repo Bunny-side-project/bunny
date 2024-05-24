@@ -31,17 +31,22 @@ class _bunnyPageWidgetState extends State<Bunny> {
   String _timeStringDay = '';
   String _timeStringMonth = '';
   double percentage = 0; // 타이머 위젯
+  Duration elapsedTime = Duration.zero; // 경과된 시간
+  Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
 
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
     super.initState();
+
     _timeString = _formatDateTime(DateTime.now());
     _timeStringWeekday = _formatWeekday(DateTime.now());
     _timeStringDay = _formatDay(DateTime.now());
     _timeStringMonth = _formatMonth(DateTime.now());
     // _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime()); // 1초마다 _getTime() 호출하여 업데이트
     _timer = Timer.periodic(Duration(days: 1), (Timer t) => _getTime());
+    _updateTime();
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateTime());
 
     // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
     Timer.periodic(Duration(seconds: 1), (timer) {
@@ -56,11 +61,38 @@ class _bunnyPageWidgetState extends State<Bunny> {
     });
   }
 
+  
+
   @override
   void dispose() {
     // 타이머 취소하여 리소스 정리
     _timer?.cancel();
     super.dispose();
+  }
+
+  void _updateTime() {
+    final DateTime now = DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
+    final DateTime startTime = DateTime(now.year, now.month, now.day, 9); //시작 9시
+    final DateTime endTime = DateTime(now.year, now.month, now.day, 21); //종료 18시
+
+    if (now.isBefore(startTime)) {
+      elapsedTime = Duration.zero;
+      remainingTime = endTime.difference(startTime);
+      percentage = 0;
+    } else if (now.isAfter(endTime)) {
+      elapsedTime = endTime.difference(startTime);
+      remainingTime = Duration.zero;
+      percentage = 100;
+    } else {
+      elapsedTime = now.difference(startTime);
+      remainingTime = endTime.difference(now);
+      percentage = (elapsedTime.inSeconds / endTime.difference(startTime).inSeconds) * 100;
+    }
+
+    setState(() {
+      _timeString = DateFormat('yyyy. MM. dd.').format(now);
+      _timeStringWeekday = DateFormat('EEEE', 'ko_KR').format(now);
+    });
   }
 
   // 현재 시간을 가져옴, 화면 표시 위해 setState() 호출, 시간문자열 update
@@ -136,7 +168,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                       width: 120,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0,25,0,0),
+                      margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
                       child: IconButton(
                           onPressed: () {},
                           icon: Icon(Icons.menu),
@@ -325,11 +357,12 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         color: Color(0xFF000000),
                                       ),
                                       child: Text(
-                                        '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
+                                         '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                        // '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
                                       )),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                  margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                                   child: DefaultTextStyle(
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.getFont(
@@ -339,7 +372,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         color: Color(0xFF949494),
                                       ),
                                       child: Text(
-                                        '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
+                                         '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분',
+                                        // '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
                                       )),
                                 ),
                               ],

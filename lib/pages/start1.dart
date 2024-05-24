@@ -45,90 +45,90 @@ class start1 extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          '9:41',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
-                            height: 1.3,
-                            letterSpacing: -0.4,
-                            color: Color(0xFF000000),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 4, 0, 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 1, 8, 0),
-                              child: SizedBox(
-                                width: 18,
-                                height: 12,
-                                child: SvgPicture.asset(
-                                  'assets/vectors/icon_mobile_signal_1_x2.svg',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 1, 7, 0.2),
-                              child: SizedBox(
-                                width: 17,
-                                height: 11.8,
-                                child: SvgPicture.asset(
-                                  'assets/vectors/wifi_3_x2.svg',
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF1C1C1E),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
-                                      child: Text(
-                                        '70',
-                                        style: GoogleFonts.getFont(
-                                          'Roboto Condensed',
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 10,
-                                          height: 1.3,
-                                          letterSpacing: 0.1,
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 5, 0, 3.8),
-                                  child: SizedBox(
-                                    width: 1.4,
-                                    height: 4.2,
-                                    child: SvgPicture.asset(
-                                      'assets/vectors/battery_end_5_x2.svg',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    // children: [
+                    //   Container(
+                    //     child: Text(
+                    //       '9:41',
+                    //       style: GoogleFonts.getFont(
+                    //         'Roboto Condensed',
+                    //         fontWeight: FontWeight.w600,
+                    //         fontSize: 17,
+                    //         height: 1.3,
+                    //         letterSpacing: -0.4,
+                    //         color: Color(0xFF000000),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   Container(
+                    //     margin: EdgeInsets.fromLTRB(0, 4, 0, 5),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.start,
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       children: [
+                    //         Container(
+                    //           margin: EdgeInsets.fromLTRB(0, 1, 8, 0),
+                    //           child: SizedBox(
+                    //             width: 18,
+                    //             height: 12,
+                    //             child: SvgPicture.asset(
+                    //               'assets/vectors/icon_mobile_signal_1_x2.svg',
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         Container(
+                    //           margin: EdgeInsets.fromLTRB(0, 1, 7, 0.2),
+                    //           child: SizedBox(
+                    //             width: 17,
+                    //             height: 11.8,
+                    //             child: SvgPicture.asset(
+                    //               'assets/vectors/wifi_3_x2.svg',
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           crossAxisAlignment: CrossAxisAlignment.start,
+                    //           children: [
+                    //             Container(
+                    //               margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
+                    //               child: Container(
+                    //                 decoration: BoxDecoration(
+                    //                   color: Color(0xFF1C1C1E),
+                    //                   borderRadius: BorderRadius.circular(4),
+                    //                 ),
+                    //                 child: Container(
+                    //                   padding:
+                    //                       EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
+                    //                   child: Text(
+                    //                     '70',
+                    //                     style: GoogleFonts.getFont(
+                    //                       'Roboto Condensed',
+                    //                       fontWeight: FontWeight.w700,
+                    //                       fontSize: 10,
+                    //                       height: 1.3,
+                    //                       letterSpacing: 0.1,
+                    //                       color: Color(0xFFFFFFFF),
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             Container(
+                    //               margin: EdgeInsets.fromLTRB(0, 5, 0, 3.8),
+                    //               child: SizedBox(
+                    //                 width: 1.4,
+                    //                 height: 4.2,
+                    //                 child: SvgPicture.asset(
+                    //                   'assets/vectors/battery_end_5_x2.svg',
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                 ),
                 Container(
@@ -144,17 +144,27 @@ class start1 extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Container(
+                //   margin: EdgeInsets.fromLTRB(0, 0, 12.9, 88),
+                //   child: Text(
+                //     '로고',
+                //     style: GoogleFonts.getFont(
+                //       'Roboto Condensed',
+                //       fontWeight: FontWeight.w600,
+                //       fontSize: 15,
+                //       height: 1.5,
+                //       color: Color(0xFFFFFFFF),
+                //     ),
+                //   ),
+                // ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 12.9, 88),
-                  child: Text(
-                    '로고',
-                    style: GoogleFonts.getFont(
-                      'Roboto Condensed',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      height: 1.5,
-                      color: Color(0xFFFFFFFF),
-                    ),
+
+                  // margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
+                  child: SvgPicture.asset(
+                    'assets/bunnyIcons/Vector.svg',
+                    width: 50,
+                    height: 51,
                   ),
                 ),
                 Container(
@@ -175,7 +185,8 @@ class start1 extends StatelessWidget {
                   height: 50.0,
                 ),
                 TextButton(
-                  onPressed: () {print("Button pressed");
+                  onPressed: () {
+                    print("Button pressed");
                     // Navigate to start2 page when button is pressed
                     Navigator.push(
                       context,
