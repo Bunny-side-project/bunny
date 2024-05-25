@@ -13,6 +13,7 @@ import 'package:intl/intl.dart'; // 요일 DateFormat()
 
 List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
 
+
 class Bunny extends StatefulWidget {
   // Stateless 위젯은 UI update 불가능함
   // State 클래스 통해 상태관리함, setState() 호출하여 UI 재구성하므로 계속 변경될 UI 부분은 setState() 사용 필요
@@ -34,7 +35,43 @@ class _bunnyPageWidgetState extends State<Bunny> {
   Duration elapsedTime = Duration.zero; // 경과된 시간
   Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
   double hourlyWage = 9860; //시간당 급여
+  double _sliderValue = 0.0;
 
+double _getInitialSliderValue() {
+  // 현재 요일에 해당하는 숫자를 반환
+  int weekdayNumber = _getWeekdayNumber(_timeStringWeekday);
+  if (weekdayNumber == 1) {
+    // 월요일이면 슬라이더의 최솟값 반환
+    return 0;
+  } else if (weekdayNumber >= 6) {
+    // 토요일 또는 일요일이면 슬라이더의 최댓값 반환
+    return 100;
+  } else {
+    // 그 외의 경우에는 슬라이더의 값이 0과 100 사이에 있도록 조정
+    return ((weekdayNumber - 1) / 6) * 100;
+  }
+}
+
+int _getWeekdayNumber(String weekday) {
+  switch (weekday) {
+    case '월요일':
+      return 1;
+    case '화요일':
+      return 2;
+    case '수요일':
+      return 3;
+    case '목요일':
+      return 4;
+    case '금요일':
+      return 5;
+    case '토요일':
+      return 6;
+    case '일요일':
+      return 7;
+    default:
+      return 0;
+  }
+}
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
@@ -113,7 +150,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
       _timeStringMonth = formattedMonth;
     });
   }
-
 
   String _formatDateTime(DateTime dateTime) {
     // 초 단위로 가져옴
@@ -697,10 +733,15 @@ class _bunnyPageWidgetState extends State<Bunny> {
                         ),
                       ),
                       GradientSlider(
-                        initialValue: 10.0,
+                        initialValue: _getInitialSliderValue(),
                         minValue: 0,
                         maxValue: 100,
                         divisions: 5,
+                        onChanged: (value) {
+                          setState(() {
+                            _sliderValue = value;
+                          });
+                        },
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(108.6, 0, 0, 0),
@@ -714,7 +755,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             ),
                             children: [
                               TextSpan(
-                                text: '540,387',
+                                // text: '540,387',
+                                text:
+                                    '${NumberFormat('#,###').format((_sliderValue + 1) * (hourlyWage * 9).toInt())}',
+
                                 style: GoogleFonts.getFont(
                                   'Roboto Condensed',
                                   fontWeight: FontWeight.w600,

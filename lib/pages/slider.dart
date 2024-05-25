@@ -88,12 +88,14 @@ class GradientSlider extends StatefulWidget {
   final double minValue;
   final double maxValue;
   final int divisions;
+  final ValueChanged<double>? onChanged;
 
   GradientSlider({
     required this.initialValue,
     required this.minValue,
     required this.maxValue,
     required this.divisions,
+    this.onChanged,
   });
 
   @override
@@ -137,6 +139,9 @@ class _GradientSliderState extends State<GradientSlider> {
         onChanged: (newValue) {
           setState(() {
             _sliderValue = newValue;
+            if (widget.onChanged != null) {
+              widget.onChanged!(_sliderValue);
+            }
           });
         },
         // label: '${_sliderValue.toInt()}%',
