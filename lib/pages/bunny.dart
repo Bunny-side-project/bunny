@@ -73,7 +73,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
   void _updateTime() {
     final DateTime now = DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
     final DateTime startTime = DateTime(now.year, now.month, now.day, 9); //시작 9시
-    final DateTime endTime = DateTime(now.year, now.month, now.day, 21); //종료 18시
+    final DateTime endTime = DateTime(now.year, now.month, now.day, 18); //종료 18시
 
     if (now.isBefore(startTime)) {
       elapsedTime = Duration.zero;
