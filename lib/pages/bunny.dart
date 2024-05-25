@@ -33,6 +33,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
   double percentage = 0; // 타이머 위젯
   Duration elapsedTime = Duration.zero; // 경과된 시간
   Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
+  double hourlyWage = 9860; //시간당 급여
 
   @override
   void initState() {
@@ -48,20 +49,17 @@ class _bunnyPageWidgetState extends State<Bunny> {
     _updateTime();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateTime());
 
-    // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
+    // 1초마다 percentage를 1씩 증가시키는 타이머
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if (percentage <= 100) {
           percentage += 100 / 3600;
         } else {
-          // 만약 percentage가 100 이상이라면 타이머를 멈춥니다.
           timer.cancel();
         }
       });
     });
   }
-
-  
 
   @override
   void dispose() {
@@ -71,9 +69,12 @@ class _bunnyPageWidgetState extends State<Bunny> {
   }
 
   void _updateTime() {
-    final DateTime now = DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
-    final DateTime startTime = DateTime(now.year, now.month, now.day, 9); //시작 9시
-    final DateTime endTime = DateTime(now.year, now.month, now.day, 18); //종료 18시
+    final DateTime now =
+        DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
+    final DateTime startTime =
+        DateTime(now.year, now.month, now.day, 9); //시작 9시
+    final DateTime endTime =
+        DateTime(now.year, now.month, now.day, 18); //종료 18시
 
     if (now.isBefore(startTime)) {
       elapsedTime = Duration.zero;
@@ -86,7 +87,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
     } else {
       elapsedTime = now.difference(startTime);
       remainingTime = endTime.difference(now);
-      percentage = (elapsedTime.inSeconds / endTime.difference(startTime).inSeconds) * 100;
+      percentage =
+          (elapsedTime.inSeconds / endTime.difference(startTime).inSeconds) *
+              100;
     }
 
     setState(() {
@@ -153,8 +156,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
               ),
               Row(
                   // 아이콘 추가
-                  mainAxisAlignment: MainAxisAlignment.center, // 가운데 정렬
-                  mainAxisSize: MainAxisSize.min, // 최소 크기 설정
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
                       margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
@@ -325,30 +328,27 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     Container(
                       padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
                       child: CustomPaint(
-                        // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
-                        size: Size(
-                            250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                        size: Size(250, 250),
                         painter: PieChart(
-                            percentage: percentage
-                                .toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
-                            textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
+                            percentage: percentage.toInt(),
+                            textScaleFactor: 1.0,
                             textColor: Colors.blueGrey),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(12, 110, 13, 13),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 0, 0, 92),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                   child: DefaultTextStyle(
                                       style: GoogleFonts.getFont(
                                         'Roboto Condensed',
@@ -357,8 +357,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         color: Color(0xFF000000),
                                       ),
                                       child: Text(
-                                         '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
-                                        // '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
+                                        // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                        '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분'
                                       )),
                                 ),
                                 Container(
@@ -372,26 +372,27 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         color: Color(0xFF949494),
                                       ),
                                       child: Text(
-                                         '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분',
-                                        // '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
+                                        '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분 ${remainingTime.inSeconds.remainder(60)}초',
                                       )),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 0, 15),
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 35),
                             child: Container(
+                              width: 160,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Container(
-                                width: 160,
-                                padding: EdgeInsets.fromLTRB(40, 18, 12.8, 16),
+                                padding: EdgeInsets.fromLTRB(0, 18, 0, 16),
                                 child: RichText(
                                   text: TextSpan(
-                                    text: '68,753',
+                                    text:
+                                        '${NumberFormat('#,###').format((elapsedTime.inMinutes * hourlyWage / 60).toInt())}',
                                     style: GoogleFonts.getFont(
                                       'Roboto Condensed',
                                       fontWeight: FontWeight.w700,
@@ -422,15 +423,16 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             child: Container(
                               padding: EdgeInsets.fromLTRB(24, 10, 25.4, 10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(0, 7, 20, 13),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
@@ -448,7 +450,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                              text: '3.47',
+                                               //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage).toInt())}',
+                                              text:'${(hourlyWage / 3600).toStringAsFixed(2)}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -502,7 +505,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                              text: '280',
+                                               //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
+                                              text:'${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -537,7 +541,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       margin: EdgeInsets.fromLTRB(0, 7, 0, 13),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
@@ -554,28 +558,34 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                               child: Text('시간당'),
                                             ),
                                           ),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: ' 12,500',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                color: Color(0xFF000000),
-                                              ),
-                                              children: [
-                                                TextSpan(
-                                                  text: '원',
-                                                  style: GoogleFonts.getFont(
-                                                    'Roboto Condensed',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 13,
-                                                    height: 1.3,
-                                                  ),
+                                          Center(
+                                              child: Container(
+                                            padding: EdgeInsets.only(left: 10),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                 //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
+                                                text: '${NumberFormat('#,###').format(hourlyWage.toInt())}',
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Color(0xFF000000),
                                                 ),
-                                              ],
+                                                children: [
+                                                  TextSpan(
+                                                    text: '원',
+                                                    style: GoogleFonts.getFont(
+                                                      'Roboto Condensed',
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 13,
+                                                      height: 1.3,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                          ))
                                         ],
                                       ),
                                     ),
