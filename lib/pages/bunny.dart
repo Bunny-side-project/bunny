@@ -34,10 +34,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
   Duration elapsedTime = Duration.zero; // 경과된 시간
   Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
   double hourlyWage = 9860; //시간당 급여
-  List<String> weekdays = ['월', '화', '수', '목', '금'];
-  List<int> dailyAmounts = [100000, 120000, 90000, 110000, 130000];
-  int selectedDayIndex = 0;
-  double sliderValue = 0.0; // 슬라이더 값을 유지하기 위한 변수
 
   @override
   void initState() {
@@ -118,11 +114,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
     });
   }
 
-  void updateAmount(int newValue) {
-    setState(() {
-      dailyAmounts[selectedDayIndex] = newValue;
-    });
-  }
 
   String _formatDateTime(DateTime dateTime) {
     // 초 단위로 가져옴
