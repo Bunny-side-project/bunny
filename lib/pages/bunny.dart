@@ -6,7 +6,7 @@ import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'save.dart';
 import 'chart.dart';
-
+import 'slider.dart';
 // 현재 시간 update 기능
 import 'dart:async';
 import 'package:intl/intl.dart'; // 요일 DateFormat()
@@ -114,6 +114,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
     });
   }
 
+
   String _formatDateTime(DateTime dateTime) {
     // 초 단위로 가져옴
     // return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}";
@@ -136,7 +137,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return MaterialApp(
+        home: Scaffold(
+            body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Color(0xFF000000)),
@@ -357,9 +360,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         color: Color(0xFF000000),
                                       ),
                                       child: Text(
-                                        // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
-                                        '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분'
-                                      )),
+                                          // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                          '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분')),
                                 ),
                                 Container(
                                   margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -450,8 +452,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                               //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage).toInt())}',
-                                              text:'${(hourlyWage / 3600).toStringAsFixed(2)}',
+                                              //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage).toInt())}',
+                                              text:
+                                                  '${(hourlyWage / 3600).toStringAsFixed(2)}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -505,8 +508,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                               //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
-                                              text:'${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
+                                              //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
+                                              text:
+                                                  '${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -563,8 +567,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                             padding: EdgeInsets.only(left: 10),
                                             child: RichText(
                                               text: TextSpan(
-                                                 //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
-                                                text: '${NumberFormat('#,###').format(hourlyWage.toInt())}',
+                                                //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
+                                                text:
+                                                    '${NumberFormat('#,###').format(hourlyWage.toInt())}',
                                                 style: GoogleFonts.getFont(
                                                   'Roboto Condensed',
                                                   fontWeight: FontWeight.w600,
@@ -691,134 +696,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF6F6F6),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: SizedBox(
-                            width: 288,
-                            height: 15,
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: LinearGradient(
-                                        begin: Alignment(-1, 0),
-                                        end: Alignment(1, 0),
-                                        colors: <Color>[
-                                          Color(0xFF9FB6FA),
-                                          Color(0xFFF6B1F3)
-                                        ],
-                                        stops: <double>[1, 0],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      width: 270,
-                                      height: 15,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF6F6F6),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment(-1, 0),
-                                                  end: Alignment(1, 0),
-                                                  colors: <Color>[
-                                                    Color(0xFFBCECFF),
-                                                    Color(0xFFDECDFF)
-                                                  ],
-                                                  stops: <double>[0, 1],
-                                                ),
-                                              ),
-                                              child: Container(
-                                                width: 288,
-                                                height: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 288,
-                                            height: 15,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                      GradientSlider(
+                        initialValue: 10.0,
+                        minValue: 0,
+                        maxValue: 100,
+                        divisions: 5,
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(108.6, 0, 0, 0),
@@ -967,85 +849,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                 ],
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF6F6F6),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: SizedBox(
-                                  width: 288,
-                                  height: 15,
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                                    child: Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            gradient: LinearGradient(
-                                              begin: Alignment(-1, 0),
-                                              end: Alignment(1, 0),
-                                              colors: <Color>[
-                                                Color(0xFF9FB6FA),
-                                                Color(0xFFF6B1F3)
-                                              ],
-                                              stops: <double>[1, 0],
-                                            ),
-                                          ),
-                                          child: Container(
-                                            width: 270,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          left: 0,
-                                          right: 0,
-                                          bottom: 0,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFF6F6F6),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Container(
-                                              width: 288,
-                                              height: 15,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment(-1, 0),
-                                                    end: Alignment(1, 0),
-                                                    colors: <Color>[
-                                                      Color(0xFFBCECFF),
-                                                      Color(0xFFDECDFF)
-                                                    ],
-                                                    stops: <double>[0, 1],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                  ),
-                                                ),
-                                                child: Container(
-                                                  width: 94,
-                                                  height: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            GradientSlider(
+                              initialValue: 10.0,
+                              minValue: 0,
+                              maxValue: 100,
+                              divisions: 30,
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
@@ -1092,21 +900,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                      Positioned(
-                        left: 81,
-                        top: 16,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xFFDECDFF)),
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFFFFFFFF),
-                          ),
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                          ),
                         ),
                       ),
                     ],
@@ -1203,159 +996,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF6F6F6),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 22, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment(-1, 0),
-                                        end: Alignment(1, 0),
-                                        colors: <Color>[
-                                          Color(0xFFBCECFF),
-                                          Color(0xFFDECDFF)
-                                        ],
-                                        stops: <double>[0, 1],
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      GradientSlider(
+                        initialValue: 10.0,
+                        minValue: 0,
+                        maxValue: 100,
+                        divisions: 12,
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(66.6, 0, 0, 0),
@@ -1409,6 +1054,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
           ),
         ),
       ),
-    );
+    )));
   }
 }
