@@ -6,12 +6,13 @@ import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'save.dart';
 import 'chart.dart';
-
+import 'slider.dart';
 // 현재 시간 update 기능
 import 'dart:async';
 import 'package:intl/intl.dart'; // 요일 DateFormat()
 
 List<double> points = [50, 0, 73, 100, 150, 120, 200, 80];
+
 
 class Bunny extends StatefulWidget {
   // Stateless 위젯은 UI update 불가능함
@@ -25,32 +26,72 @@ class Bunny extends StatefulWidget {
 
 // StatefulWidget 만들면서 class 추가 및 분리함
 class _bunnyPageWidgetState extends State<Bunny> {
-  Timer? _timer;  // '현재 시간' 표시 위한 변수
+  Timer? _timer; // '현재 시간' 표시 위한 변수
   String _timeString = '';
   String _timeStringWeekday = '';
   String _timeStringDay = '';
   String _timeStringMonth = '';
-  double percentage = 0; // 타이머 위젯 
+  double percentage = 0; // 타이머 위젯
+  Duration elapsedTime = Duration.zero; // 경과된 시간
+  Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
+  double hourlyWage = 9860; //시간당 급여
+  double _sliderValue = 0.0;
 
+double _getInitialSliderValue() {
+  // 현재 요일에 해당하는 숫자를 반환
+  int weekdayNumber = _getWeekdayNumber(_timeStringWeekday);
+  if (weekdayNumber == 1) {
+    // 월요일이면 슬라이더의 최솟값 반환
+    return 0;
+  } else if (weekdayNumber >= 6) {
+    // 토요일 또는 일요일이면 슬라이더의 최댓값 반환
+    return 100;
+  } else {
+    // 그 외의 경우에는 슬라이더의 값이 0과 100 사이에 있도록 조정
+    return ((weekdayNumber - 1) / 6) * 100;
+  }
+}
+
+int _getWeekdayNumber(String weekday) {
+  switch (weekday) {
+    case '월요일':
+      return 1;
+    case '화요일':
+      return 2;
+    case '수요일':
+      return 3;
+    case '목요일':
+      return 4;
+    case '금요일':
+      return 5;
+    case '토요일':
+      return 6;
+    case '일요일':
+      return 7;
+    default:
+      return 0;
+  }
+}
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
     super.initState();
+
     _timeString = _formatDateTime(DateTime.now());
     _timeStringWeekday = _formatWeekday(DateTime.now());
     _timeStringDay = _formatDay(DateTime.now());
     _timeStringMonth = _formatMonth(DateTime.now());
     // _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime()); // 1초마다 _getTime() 호출하여 업데이트
     _timer = Timer.periodic(Duration(days: 1), (Timer t) => _getTime());
+    _updateTime();
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateTime());
 
-    // 1초마다 percentage를 1씩 증가시키는 타이머를 시작합니다.
+    // 1초마다 percentage를 1씩 증가시키는 타이머
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         if (percentage <= 100) {
-          percentage += 100/3600 ;
-          
+          percentage += 100 / 3600;
         } else {
-          // 만약 percentage가 100 이상이라면 타이머를 멈춥니다.
           timer.cancel();
         }
       });
@@ -62,6 +103,36 @@ class _bunnyPageWidgetState extends State<Bunny> {
     // 타이머 취소하여 리소스 정리
     _timer?.cancel();
     super.dispose();
+  }
+
+  void _updateTime() {
+    final DateTime now =
+        DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
+    final DateTime startTime =
+        DateTime(now.year, now.month, now.day, 9); //시작 9시
+    final DateTime endTime =
+        DateTime(now.year, now.month, now.day, 18); //종료 18시
+
+    if (now.isBefore(startTime)) {
+      elapsedTime = Duration.zero;
+      remainingTime = endTime.difference(startTime);
+      percentage = 0;
+    } else if (now.isAfter(endTime)) {
+      elapsedTime = endTime.difference(startTime);
+      remainingTime = Duration.zero;
+      percentage = 100;
+    } else {
+      elapsedTime = now.difference(startTime);
+      remainingTime = endTime.difference(now);
+      percentage =
+          (elapsedTime.inSeconds / endTime.difference(startTime).inSeconds) *
+              100;
+    }
+
+    setState(() {
+      _timeString = DateFormat('yyyy. MM. dd.').format(now);
+      _timeStringWeekday = DateFormat('EEEE', 'ko_KR').format(now);
+    });
   }
 
   // 현재 시간을 가져옴, 화면 표시 위해 setState() 호출, 시간문자열 update
@@ -100,10 +171,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
     return "${monthTime.month.toString().padLeft(2, '0')}";
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return MaterialApp(
+        home: Scaffold(
+            body: SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Color(0xFF000000)),
@@ -116,13 +188,37 @@ class _bunnyPageWidgetState extends State<Bunny> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 32),
+                margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 2),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start),
               ),
+              Row(
+                  // 아이콘 추가
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
+                      child: SvgPicture.asset(
+                        'assets/bunnyIcons/Vector.svg',
+                        width: 35,
+                        height: 39,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 120,
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.menu),
+                          iconSize: 35),
+                    )
+                  ]),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
                 child: Container(
                   // padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
                   child: Stack(
@@ -135,7 +231,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
+                              // margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
                               child: SizedBox(
                                 width: 213,
                                 child: Row(
@@ -144,20 +240,18 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      // height: 22,
-                                      margin:
-                                          EdgeInsets.fromLTRB(0, 18, 20, 10),
+                                      // height: 30,
+                                      margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
                                       child: SizedBox(
                                         // width: 145.8,
-                                        child: Text(
-                                          '버니',
-                                          style: GoogleFonts.getFont(
-                                            'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 20,
-                                            color: Color(0xFF000000),
-                                          ),
-                                        ),
+                                        child: DefaultTextStyle(
+                                            style: GoogleFonts.getFont(
+                                              'Inter',
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20,
+                                              color: Color(0xFF000000),
+                                            ),
+                                            child: Text('버니')),
                                       ),
                                     ),
                                     TextButton(
@@ -173,7 +267,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                         margin:
                                             EdgeInsets.fromLTRB(0, 10, 0, 10),
                                         child: Text(
-                                          '아끼기',
+                                          '아끼',
                                           style: GoogleFonts.getFont(
                                             'Inter',
                                             fontWeight: FontWeight.w600,
@@ -187,21 +281,21 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                 ),
                               ),
                             ),
-                            // Container(
-                            //   decoration: BoxDecoration(
-                            //     color: Color(0xFFDDDDDD),
-                            //   ),
-                            //   child: Container(
-                            //     width: 360,
-                            //     height: 1,
-                            //   ),
-                            // ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDDDDDD),
+                              ),
+                              child: Container(
+                                width: 360,
+                                height: 1,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       Positioned(
                         left: 0,
-                        bottom: 10,
+                        top: 65,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Color(0xFF98A2FF),
@@ -226,29 +320,29 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: Text(
-                          '오늘의 버니',
+                        child: DefaultTextStyle(
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w700,
                             fontSize: 20,
                             color: Color(0xFF262626),
                           ),
+                          child: Text('오늘의 버니'),
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          // 날짜 부분: 실시간 값 반영되도록 변경함 
-                          // '2024. 05. 10. 금 ',
-                          _timeString + _timeStringWeekday,
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(_timeString + _timeStringWeekday
+                                // 날짜 부분: 실시간 값 반영되도록 변경함
+                                // '2024. 05. 10. 금 ',
+                                )),
                       ),
                     ],
                   ),
@@ -261,90 +355,82 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(20, 20),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
                 child: Stack(
                   children: [
-                    // Positioned(
-                    //   top: 20,
-                    //   child: SizedBox(
-                    //     width: 237,
-                    //     height: 237,
-                    //     child: SvgPicture.asset(
-                    //       'assets/vectors/group_43_x2.svg',
-                    //     ),
-                    //   ),
-                    // ),
                     Container(
                       padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
-
                       child: CustomPaint(
-                        // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
-                        size: Size(
-                            250, 250), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                        size: Size(250, 250),
                         painter: PieChart(
-                            percentage: percentage.toInt(), // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
-                            textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
+                            percentage: percentage.toInt(),
+                            textScaleFactor: 1.0,
                             textColor: Colors.blueGrey),
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(12, 110, 13, 13),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             margin: EdgeInsets.fromLTRB(0, 0, 0, 92),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                  child: Text(
-                                    '5시간 30분', // 이 부분 실시간 변수로 바꿔야 함
-                                    style: GoogleFonts.getFont(
-                                      'Roboto Condensed',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 24,
-                                      color: Color(0xFF000000),
-                                    ),
-                                  ),
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                  child: DefaultTextStyle(
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 24,
+                                        color: Color(0xFF000000),
+                                      ),
+                                      child: Text(
+                                          // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                          '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분')),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Text(
-                                    '퇴근까지 4시간 30분', // 퇴근까지 4시간 30분 => 시간 부분 변수로 추가해야 함
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.getFont(
-                                      'Roboto Condensed',
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: Color(0xFF949494),
-                                    ),
-                                  ),
+                                  margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                                  child: DefaultTextStyle(
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: Color(0xFF949494),
+                                      ),
+                                      child: Text(
+                                        '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분 ${remainingTime.inSeconds.remainder(60)}초',
+                                      )),
                                 ),
                               ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 1, 15),
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 35),
                             child: Container(
+                              width: 160,
+                              alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Container(
-                                width: 160,
-                                padding: EdgeInsets.fromLTRB(40, 18, 12.8, 16),
+                                padding: EdgeInsets.fromLTRB(0, 18, 0, 16),
                                 child: RichText(
                                   text: TextSpan(
-                                    text: '68,753',
+                                    text:
+                                        '${NumberFormat('#,###').format((elapsedTime.inMinutes * hourlyWage / 60).toInt())}',
                                     style: GoogleFonts.getFont(
                                       'Roboto Condensed',
                                       fontWeight: FontWeight.w700,
@@ -375,35 +461,36 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             child: Container(
                               padding: EdgeInsets.fromLTRB(24, 10, 25.4, 10),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(0, 7, 22.7, 13),
+                                      margin: EdgeInsets.fromLTRB(0, 7, 20, 13),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 11, 0, 5.7, 6),
-                                            child: Text(
-                                              '초당',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Color(0xFF737373),
-                                              ),
-                                            ),
+                                            child: DefaultTextStyle(
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color: Color(0xFF737373),
+                                                ),
+                                                child: Text('초당')),
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                              text: '3.47',
+                                              //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage).toInt())}',
+                                              text:
+                                                  '${(hourlyWage / 3600).toStringAsFixed(2)}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -427,21 +514,12 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       ),
                                     ),
                                   ),
-                                  // Expanded(
-                                  //   child: Container(
-                                  //     margin:
-                                  //         EdgeInsets.fromLTRB(10, 0, 40, 0),
-                                  //     child: Container(
-                                  //       decoration: BoxDecoration(
-                                  //         color: Color(0xFFFFFFFF),
-                                  //       ),
-                                  //       child: Container(
-                                  //         width: 0.1,
-                                  //         height: 100,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Container(
+                                    width: 2,
+                                    height: 40,
+                                    margin: EdgeInsets.fromLTRB(0, 12, 5, 0),
+                                    color: Colors.white,
+                                  ),
                                   Expanded(
                                     child: Container(
                                       margin:
@@ -455,19 +533,20 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 9, 0, 3.2, 6),
-                                            child: Text(
-                                              '분당',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Color(0xFF737373),
-                                              ),
-                                            ),
+                                            child: DefaultTextStyle(
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color: Color(0xFF737373),
+                                                ),
+                                                child: Text('분당')),
                                           ),
                                           RichText(
                                             text: TextSpan(
-                                              text: '280',
+                                              //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
+                                              text:
+                                                  '${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w600,
@@ -491,65 +570,63 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       ),
                                     ),
                                   ),
-                                  // Expanded(
-                                  //   child: Container(
-                                  //     margin:
-                                  //         EdgeInsets.fromLTRB(40, 0, 10, 0),
-                                  //     child: Container(
-                                  //       decoration: BoxDecoration(
-                                  //         color: Color(0xFFFFFFFF),
-                                  //       ),
-                                  //       child: Container(
-                                  //         width: 0.1,
-                                  //         height: 100,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  Container(
+                                    width: 2,
+                                    height: 40,
+                                    margin: EdgeInsets.fromLTRB(4, 12, 4, 0),
+                                    color: Colors.white,
+                                  ),
                                   Expanded(
                                     child: Container(
                                       margin: EdgeInsets.fromLTRB(0, 7, 0, 13),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
                                                 17, 0, 6.7, 6),
-                                            child: Text(
-                                              '시간당',
+                                            child: DefaultTextStyle(
                                               style: GoogleFonts.getFont(
                                                 'Roboto Condensed',
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 13,
                                                 color: Color(0xFF737373),
                                               ),
+                                              child: Text('시간당'),
                                             ),
                                           ),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: ' 12,500',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                color: Color(0xFF000000),
-                                              ),
-                                              children: [
-                                                TextSpan(
-                                                  text: '원',
-                                                  style: GoogleFonts.getFont(
-                                                    'Roboto Condensed',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 13,
-                                                    height: 1.3,
-                                                  ),
+                                          Center(
+                                              child: Container(
+                                            padding: EdgeInsets.only(left: 10),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
+                                                text:
+                                                    '${NumberFormat('#,###').format(hourlyWage.toInt())}',
+                                                style: GoogleFonts.getFont(
+                                                  'Roboto Condensed',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Color(0xFF000000),
                                                 ),
-                                              ],
+                                                children: [
+                                                  TextSpan(
+                                                    text: '원',
+                                                    style: GoogleFonts.getFont(
+                                                      'Roboto Condensed',
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 13,
+                                                      height: 1.3,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                          ))
                                         ],
                                       ),
                                     ),
@@ -574,27 +651,29 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: Text(
-                          '이 주의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF262626),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF262626),
+                            ),
+                            child: Text(
+                              '이 주의 버니',
+                            )),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringWeekday,
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(
+                              _timeStringWeekday,
+                            )),
                       ),
                     ],
                   ),
@@ -607,9 +686,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
@@ -652,134 +732,16 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF6F6F6),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: SizedBox(
-                            width: 288,
-                            height: 15,
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      gradient: LinearGradient(
-                                        begin: Alignment(-1, 0),
-                                        end: Alignment(1, 0),
-                                        colors: <Color>[
-                                          Color(0xFF9FB6FA),
-                                          Color(0xFFF6B1F3)
-                                        ],
-                                        stops: <double>[1, 0],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      width: 270,
-                                      height: 15,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF6F6F6),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Positioned(
-                                            left: 0,
-                                            right: 0,
-                                            top: 0,
-                                            bottom: 0,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                gradient: LinearGradient(
-                                                  begin: Alignment(-1, 0),
-                                                  end: Alignment(1, 0),
-                                                  colors: <Color>[
-                                                    Color(0xFFBCECFF),
-                                                    Color(0xFFDECDFF)
-                                                  ],
-                                                  stops: <double>[0, 1],
-                                                ),
-                                              ),
-                                              child: Container(
-                                                width: 288,
-                                                height: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 288,
-                                            height: 15,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                  child: Container(
-                                                    width: 2,
-                                                    height: 15,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                      GradientSlider(
+                        initialValue: _getInitialSliderValue(),
+                        minValue: 0,
+                        maxValue: 100,
+                        divisions: 5,
+                        onChanged: (value) {
+                          setState(() {
+                            _sliderValue = value;
+                          });
+                        },
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(108.6, 0, 0, 0),
@@ -793,7 +755,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             ),
                             children: [
                               TextSpan(
-                                text: '540,387',
+                                // text: '540,387',
+                                text:
+                                    '${NumberFormat('#,###').format((_sliderValue + 1) * (hourlyWage * 9).toInt())}',
+
                                 style: GoogleFonts.getFont(
                                   'Roboto Condensed',
                                   fontWeight: FontWeight.w600,
@@ -839,27 +804,27 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: Text(
-                          '이 달의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF262626),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF262626),
+                            ),
+                            child: Text('이 달의 버니')),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringDay + '일',
-                          // '5월',
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
                           style: GoogleFonts.getFont(
                             'Roboto Condensed',
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
                             color: Color(0xFFB7B7B7),
                           ),
+                          child: Text(_timeStringDay + '일'
+                              // '5월',
+                              ),
                         ),
                       ),
                     ],
@@ -873,9 +838,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
@@ -927,85 +893,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                 ],
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF6F6F6),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: SizedBox(
-                                  width: 288,
-                                  height: 15,
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(0, 0, 18, 0),
-                                    child: Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            gradient: LinearGradient(
-                                              begin: Alignment(-1, 0),
-                                              end: Alignment(1, 0),
-                                              colors: <Color>[
-                                                Color(0xFF9FB6FA),
-                                                Color(0xFFF6B1F3)
-                                              ],
-                                              stops: <double>[1, 0],
-                                            ),
-                                          ),
-                                          child: Container(
-                                            width: 270,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          left: 0,
-                                          right: 0,
-                                          bottom: 0,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFF6F6F6),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Container(
-                                              width: 288,
-                                              height: 15,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment(-1, 0),
-                                                    end: Alignment(1, 0),
-                                                    colors: <Color>[
-                                                      Color(0xFFBCECFF),
-                                                      Color(0xFFDECDFF)
-                                                    ],
-                                                    stops: <double>[0, 1],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(10),
-                                                    bottomLeft:
-                                                        Radius.circular(10),
-                                                  ),
-                                                ),
-                                                child: Container(
-                                                  width: 94,
-                                                  height: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            GradientSlider(
+                              initialValue: 10.0,
+                              minValue: 0,
+                              maxValue: 100,
+                              divisions: 30,
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
@@ -1054,21 +946,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           ],
                         ),
                       ),
-                      Positioned(
-                        left: 81,
-                        top: 16,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Color(0xFFDECDFF)),
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFFFFFFFF),
-                          ),
-                          child: Container(
-                            width: 25,
-                            height: 25,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -1083,27 +960,25 @@ class _bunnyPageWidgetState extends State<Bunny> {
                     children: [
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: Text(
-                          '올해의 버니',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF000000),
-                          ),
-                        ),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20,
+                              color: Color(0xFF000000),
+                            ),
+                            child: Text('올해의 버니')),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(0, 3, 0, 0),
-                        child: Text(
-                          _timeStringMonth + '월',
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                        ),
+                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                        child: DefaultTextStyle(
+                            style: GoogleFonts.getFont(
+                              'Roboto Condensed',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Color(0xFFB7B7B7),
+                            ),
+                            child: Text(_timeStringMonth + '월')),
                       ),
                     ],
                   ),
@@ -1116,9 +991,10 @@ class _bunnyPageWidgetState extends State<Bunny> {
                   color: Color(0xFFFFFFFF),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x0D000000),
-                      offset: Offset(10, 10),
+                      color: Color.fromRGBO(0, 0, 0, 0.07),
+                      offset: Offset(0, 0),
                       blurRadius: 24,
+                      spreadRadius: 3,
                     ),
                   ],
                 ),
@@ -1164,159 +1040,11 @@ class _bunnyPageWidgetState extends State<Bunny> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF6F6F6),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(0, 0, 22, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment(-1, 0),
-                                        end: Alignment(1, 0),
-                                        colors: <Color>[
-                                          Color(0xFFBCECFF),
-                                          Color(0xFFDECDFF)
-                                        ],
-                                        stops: <double>[0, 1],
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFFFFF),
-                                          ),
-                                          child: Container(
-                                            width: 2,
-                                            height: 15,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFFFFFFF),
-                                        ),
-                                        child: Container(
-                                          width: 2,
-                                          height: 15,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      GradientSlider(
+                        initialValue: 10.0,
+                        minValue: 0,
+                        maxValue: 100,
+                        divisions: 12,
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(66.6, 0, 0, 0),
@@ -1370,6 +1098,6 @@ class _bunnyPageWidgetState extends State<Bunny> {
           ),
         ),
       ),
-    );
+    )));
   }
 }
