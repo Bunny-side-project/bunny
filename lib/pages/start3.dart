@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data/sp_helper.dart';
+import 'package:flutter_app/data/work_performance.dart';
 // import 'package:flutter_app/pages/start4.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +10,25 @@ import 'package:flutter_app/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'start4.dart';
 import 'start2.dart';
+
+// class start3_working extends StatefulWidget {
+//   const start3_working({Key? key}) : super(key: key);
+
+//   @override
+//   _Start3_workingScreenState createState() => _Start3_workingScreenState();
+// }
+
+// class _Start3_workingScreenState extends State<start3_working> {
+
+// final TextEditingController txtStartTime = TextEditingController();
+// final TextEditingController txtEndTime = TextEditingController();
+// final SPHelper helper = SPHelper();
+
+// @override
+// void initState() {
+//   helper.init();
+//   super.initState();
+// }
 
 class start3 extends StatelessWidget {
   @override
@@ -278,6 +301,11 @@ class start3 extends StatelessWidget {
                     color: Color(0xFF808080),
                   ),
                 ),
+                // child: TextField(
+                //   controller: txtDuration,
+                //   keyboardType: TextInputType.number,
+                //   decoration: InputDecoration(hintText: '3200000'),
+                // ),
               ),
             ),
             Container(
@@ -389,6 +417,12 @@ class start3 extends StatelessWidget {
                               color: Color(0xFF808080),
                             ),
                           ),
+                          // TextField 로 값 받아오기 시도 중인데 화면이 안 넘어감 (error 메시지는 없음, 문제 찾는 중)
+                          // child: TextField(
+                          //   controller: txtStartTime,
+                          //   keyboardType: TextInputType.number,
+                          //   decoration: InputDecoration(hintText: '9'),
+                          // ),
                         ),
                       ),
                     ),
@@ -412,6 +446,11 @@ class start3 extends StatelessWidget {
                             color: Color(0xFF808080),
                           ),
                         ),
+                        // child: TextField(
+                        //   controller: txtEndTime,
+                        //   keyboardType: TextInputType.number,
+                        //   decoration: InputDecoration(hintText: '18'),
+                        // ),
                       ),
                     ),
                   ),
@@ -478,16 +517,27 @@ class start3 extends StatelessWidget {
                           ),
                           child: Container(
                             padding: EdgeInsets.fromLTRB(45, 11, 0, 11),
-                            child: Text(
-                              '다음',
-                              style: GoogleFonts.getFont(
-                                'Roboto Condensed',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                                height: 1.4,
-                                letterSpacing: -0.5,
-                                color: Color(0xFFFFFFFF),
+                            child: TextButton( // textButton 으로 바꾸면서 위치 변함 
+                              child: Text(
+                                '다음',
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  height: 1.4,
+                                  letterSpacing: -0.5,
+                                  color: Color(0xFFFFFFFF),
+                                ),
                               ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => start4()),
+                                );
+                                print('버튼 onPressd');
+                              },
+                              // saveWorkPerformance,  // 입력 내용 저장
                             ),
                           ),
                         ),
@@ -502,4 +552,16 @@ class start3 extends StatelessWidget {
       ),
     );
   }
+
+  // 현재 다시 StatelessWidget 으로 변경해놓아서 사용 불가능함
+  // Future saveWorkPerformance() async {
+  //   WorkPerformance newWorkPerformance = WorkPerformance(
+  //       9860,
+  //       int.tryParse(txtStartTime.text) ?? 0,
+  //       int.tryParse(txtEndTime.text) ?? 0,
+  //       9);
+  //   helper.writeWorkPerformance(newWorkPerformance);
+  //   txtStartTime.text = '';
+  //   txtEndTime.text = '';
+  // }
 }
