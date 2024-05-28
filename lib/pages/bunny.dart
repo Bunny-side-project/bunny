@@ -42,6 +42,33 @@ class _bunnyPageWidgetState extends State<Bunny> {
     return DateTime(year, month + 1, 0).day;
   } // 해당 월의 일수 반환
 
+  String _weekdayLabelFormatter(double value) { //라벨값을 위해 추가
+    const weekdays = ['월요일', '화요일', '수요일', '목요일', '금요일'];
+    return weekdays[value.toInt()];
+  }
+
+  String _dateLabelFormatter(double value) {
+    return '${value.toInt() + 1}일';
+  }
+
+  String _monthLabelFormatter(double value) {
+    const months = [
+      '1월',
+      '2월',
+      '3월',
+      '4월',
+      '5월',
+      '6월',
+      '7월',
+      '8월',
+      '9월',
+      '10월',
+      '11월',
+      '12월'
+    ];
+    return months[value.toInt()];
+  }
+
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
@@ -166,462 +193,634 @@ class _bunnyPageWidgetState extends State<Bunny> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             body: SingleChildScrollView(
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Color(0xFF000000)),
-          color: Color(0xFFFFFFFF),
-        ),
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 14, 0, 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 2),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start),
-              ),
-              Row(
-                  // 아이콘 추가
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
-                      child: SvgPicture.asset(
-                        'assets/bunnyIcons/Vector.svg',
-                        width: 35,
-                        height: 39,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 120,
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.menu),
-                          iconSize: 35),
-                    )
-                  ]),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                child: Container(
-                  // padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              // margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
-                              child: SizedBox(
-                                width: 213,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      // height: 30,
-                                      margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
-                                      child: SizedBox(
-                                        // width: 145.8,
-                                        child: DefaultTextStyle(
-                                            style: GoogleFonts.getFont(
-                                              'Inter',
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20,
-                                              color: Color(0xFF000000),
-                                            ),
-                                            child: Text('버니')),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => save()),
-                                        );
-                                      },
-                                      child: Container(
-                                        // height: 22,
-                                        margin:
-                                            EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                        child: Text(
-                                          '아끼',
-                                          style: GoogleFonts.getFont(
-                                            'Inter',
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 20,
-                                            color: Color(0xFFA9A9A9),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xFFDDDDDD),
-                              ),
-                              child: Container(
-                                width: 360,
-                                height: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        left: 0,
-                        top: 65,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFF98A2FF),
-                          ),
-                          child: Container(
-                            width: 180,
-                            height: 3,
-                          ),
-                        ),
-                      ),
-                    ],
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFF000000)),
+              color: Color(0xFFFFFFFF),
+            ),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(0, 14, 0, 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(23.5, 0, 10.6, 2),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start),
                   ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(32, 10, 32, 15),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: DefaultTextStyle(
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF262626),
+                  Row(
+                      // 아이콘 추가
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(163, 31, 0, 0),
+                          child: SvgPicture.asset(
+                            'assets/bunnyIcons/Vector.svg',
+                            width: 35,
+                            height: 39,
                           ),
-                          child: Text('오늘의 버니'),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Color(0xFFB7B7B7),
-                            ),
-                            child: Text(_timeString + _timeStringWeekday
-                                // 날짜 부분: 실시간 값 반영되도록 변경함
-                                // '2024. 05. 10. 금 ',
-                                )),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(25, 0, 23, 45),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.07),
-                      offset: Offset(0, 0),
-                      blurRadius: 24,
-                      spreadRadius: 3,
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
-                      child: CustomPaint(
-                        size: Size(250, 250),
-                        painter: PieChart(
-                            percentage: percentage.toInt(),
-                            textScaleFactor: 1.0,
-                            textColor: Colors.blueGrey),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(12, 110, 13, 13),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        SizedBox(
+                          width: 120,
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.menu),
+                              iconSize: 35),
+                        )
+                      ]),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                    child: Container(
+                      // padding: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                      child: Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 92),
+                          SizedBox(
+                            width: double.infinity,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                  child: DefaultTextStyle(
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 24,
-                                        color: Color(0xFF000000),
-                                      ),
-                                      child: Text(
-                                          // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
-                                          '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분')),
+                                  // margin: EdgeInsets.fromLTRB(4.2, 0, 0, 13),
+                                  child: SizedBox(
+                                    width: 213,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          // height: 30,
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 20, 20, 0),
+                                          child: SizedBox(
+                                            // width: 145.8,
+                                            child: DefaultTextStyle(
+                                                style: GoogleFonts.getFont(
+                                                  'Inter',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 20,
+                                                  color: Color(0xFF000000),
+                                                ),
+                                                child: Text('버니')),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => save()),
+                                            );
+                                          },
+                                          child: Container(
+                                            // height: 22,
+                                            margin: EdgeInsets.fromLTRB(
+                                                0, 10, 0, 10),
+                                            child: Text(
+                                              '아끼',
+                                              style: GoogleFonts.getFont(
+                                                'Inter',
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 20,
+                                                color: Color(0xFFA9A9A9),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                                  child: DefaultTextStyle(
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: Color(0xFF949494),
-                                      ),
-                                      child: Text(
-                                        '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분 ${remainingTime.inSeconds.remainder(60)}초',
-                                      )),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFDDDDDD),
+                                  ),
+                                  child: Container(
+                                    width: 360,
+                                    height: 1,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 35),
+                          Positioned(
+                            left: 0,
+                            top: 65,
                             child: Container(
-                              width: 160,
-                              alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFF98A2FF),
-                                borderRadius: BorderRadius.circular(50),
                               ),
                               child: Container(
-                                padding: EdgeInsets.fromLTRB(0, 18, 0, 16),
-                                child: RichText(
-                                  text: TextSpan(
-                                    text:
-                                        '${NumberFormat('#,###').format((elapsedTime.inMinutes * hourlyWage / 60).toInt())}',
-                                    style: GoogleFonts.getFont(
-                                      'Roboto Condensed',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 24,
-                                      color: Color(0xFFFFFFFF),
+                                width: 180,
+                                height: 3,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(32, 10, 32, 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
+                            child: DefaultTextStyle(
+                              style: GoogleFonts.getFont(
+                                'Roboto Condensed',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: Color(0xFF262626),
+                              ),
+                              child: Text('오늘의 버니'),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Color(0xFFB7B7B7),
+                                ),
+                                child: Text(_timeString + _timeStringWeekday
+                                    // 날짜 부분: 실시간 값 반영되도록 변경함
+                                    // '2024. 05. 10. 금 ',
+                                    )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(25, 0, 23, 45),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color(0xFFFFFFFF),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.07),
+                          offset: Offset(0, 0),
+                          blurRadius: 24,
+                          spreadRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.fromLTRB(45, 13, 13, 0),
+                          child: CustomPaint(
+                            size: Size(250, 250),
+                            painter: PieChart(
+                                percentage: percentage.toInt(),
+                                textScaleFactor: 1.0,
+                                textColor: Colors.blueGrey),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(12, 110, 13, 13),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 92),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                      child: DefaultTextStyle(
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 24,
+                                            color: Color(0xFF000000),
+                                          ),
+                                          child: Text(
+                                              // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                              '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분')),
                                     ),
-                                    children: [
-                                      TextSpan(
-                                        text: '원',
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                                      child: DefaultTextStyle(
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: Color(0xFF949494),
+                                          ),
+                                          child: Text(
+                                            '퇴근까지 \n ${remainingTime.inHours}시간 ${remainingTime.inMinutes.remainder(60)}분 ${remainingTime.inSeconds.remainder(60)}초',
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 35),
+                                child: Container(
+                                  width: 160,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF98A2FF),
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(0, 18, 0, 16),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text:
+                                            '${NumberFormat('#,###').format((elapsedTime.inMinutes * hourlyWage / 60).toInt())}',
                                         style: GoogleFonts.getFont(
                                           'Roboto Condensed',
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          height: 1.3,
+                                          fontSize: 24,
+                                          color: Color(0xFFFFFFFF),
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: '원',
+                                            style: GoogleFonts.getFont(
+                                              'Roboto Condensed',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              height: 1.3,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFF6F6F6),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Container(
+                                  padding:
+                                      EdgeInsets.fromLTRB(24, 10, 25.4, 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 7, 20, 13),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    11, 0, 5.7, 6),
+                                                child: DefaultTextStyle(
+                                                    style: GoogleFonts.getFont(
+                                                      'Roboto Condensed',
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 13,
+                                                      color: Color(0xFF737373),
+                                                    ),
+                                                    child: Text('초당')),
+                                              ),
+                                              RichText(
+                                                text: TextSpan(
+                                                  //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage * elapsedTime.inHours).toInt())}',
+                                                  text:'${(hourlyWage / 3600).toStringAsFixed(2)}',
+                                                  style: GoogleFonts.getFont(
+                                                    'Roboto Condensed',
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: '원',
+                                                      style:
+                                                          GoogleFonts.getFont(
+                                                        'Roboto Condensed',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 13,
+                                                        height: 1.3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 2,
+                                        height: 40,
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 12, 5, 0),
+                                        color: Colors.white,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              20, 7, 27.2, 13),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    9, 0, 3.2, 6),
+                                                child: DefaultTextStyle(
+                                                    style: GoogleFonts.getFont(
+                                                      'Roboto Condensed',
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 13,
+                                                      color: Color(0xFF737373),
+                                                    ),
+                                                    child: Text('분당')),
+                                              ),
+                                              RichText(
+                                                text: TextSpan(
+                                                  //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
+                                                  text:
+                                                      '${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
+                                                  style: GoogleFonts.getFont(
+                                                    'Roboto Condensed',
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 16,
+                                                    color: Color(0xFF000000),
+                                                  ),
+                                                  children: [
+                                                    TextSpan(
+                                                      text: '원',
+                                                      style:
+                                                          GoogleFonts.getFont(
+                                                        'Roboto Condensed',
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 13,
+                                                        height: 1.3,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 2,
+                                        height: 40,
+                                        margin:
+                                            EdgeInsets.fromLTRB(4, 12, 4, 0),
+                                        color: Colors.white,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          margin:
+                                              EdgeInsets.fromLTRB(0, 7, 0, 13),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    17, 0, 6.7, 6),
+                                                child: DefaultTextStyle(
+                                                  style: GoogleFonts.getFont(
+                                                    'Roboto Condensed',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 13,
+                                                    color: Color(0xFF737373),
+                                                  ),
+                                                  child: Text('시간당'),
+                                                ),
+                                              ),
+                                              Center(
+                                                  child: Container(
+                                                padding:
+                                                    EdgeInsets.only(left: 10),
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                    //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
+                                                    text:
+                                                        '${NumberFormat('#,###').format(hourlyWage.toInt())}',
+                                                    style: GoogleFonts.getFont(
+                                                      'Roboto Condensed',
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16,
+                                                      color: Color(0xFF000000),
+                                                    ),
+                                                    children: [
+                                                      TextSpan(
+                                                        text: '원',
+                                                        style:
+                                                            GoogleFonts.getFont(
+                                                          'Roboto Condensed',
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 13,
+                                                          height: 1.3,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ))
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: Color(0xFF262626),
+                                ),
+                                child: Text(
+                                  '이 주의 버니',
+                                )),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xFFF6F6F6),
-                              borderRadius: BorderRadius.circular(20),
+                            margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Color(0xFFB7B7B7),
+                                ),
+                                child: Text(
+                                  _timeStringWeekday,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(24, 0, 24, 45),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color(0xFFFFFFFF),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.07),
+                          offset: Offset(0, 0),
+                          blurRadius: 24,
+                          spreadRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(3, 0, 2.9, 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 0, 6.5, 0),
+                                  child: SizedBox(
+                                    width: 265.5,
+                                    child: Text(
+                                      '월',
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 11,
+                                        color: Color(0xFF737373),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '금',
+                                  style: GoogleFonts.getFont(
+                                    'Roboto Condensed',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 11,
+                                    color: Color(0xFF737373),
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(24, 10, 25.4, 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                          ),
+                          GradientSlider(
+                            initialValue: _weekdaySliderValue,
+                            minValue: 0,
+                            maxValue: 4, // 주중 슬라이더의 최대값을 4로 설정
+                            divisions: 4,
+                            onChanged: (value) {
+                              setState(() {
+                                _weekdaySliderValue = value;
+                              });
+                            },
+                            labelFormatter: _weekdayLabelFormatter,
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(108.6, 0, 0, 0),
+                            child: RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                  color: Color(0xFF000000),
+                                ),
                                 children: [
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 7, 20, 13),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                11, 0, 5.7, 6),
-                                            child: DefaultTextStyle(
-                                                style: GoogleFonts.getFont(
-                                                  'Roboto Condensed',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 13,
-                                                  color: Color(0xFF737373),
-                                                ),
-                                                child: Text('초당')),
-                                          ),
-                                          RichText(
-                                            text: TextSpan(
-                                              //text: '${NumberFormat('#,###').format((elapsedTime.inSeconds < 60 ? 0 : hourlyWage).toInt())}',
-                                              text:
-                                                  '${(hourlyWage / 3600).toStringAsFixed(2)}',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                color: Color(0xFF000000),
-                                              ),
-                                              children: [
-                                                TextSpan(
-                                                  text: '원',
-                                                  style: GoogleFonts.getFont(
-                                                    'Roboto Condensed',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 13,
-                                                    height: 1.3,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                  TextSpan(
+                                    // text: '540,387',
+                                    text:
+                                        '${NumberFormat('#,###').format((((_weekdaySliderValue + 1) * (hourlyWage * 9).toInt())))}',
+
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      height: 1.3,
+                                      color: Color(0xFF98A2FF),
                                     ),
                                   ),
-                                  Container(
-                                    width: 2,
-                                    height: 40,
-                                    margin: EdgeInsets.fromLTRB(0, 12, 5, 0),
-                                    color: Colors.white,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin:
-                                          EdgeInsets.fromLTRB(20, 7, 27.2, 13),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                9, 0, 3.2, 6),
-                                            child: DefaultTextStyle(
-                                                style: GoogleFonts.getFont(
-                                                  'Roboto Condensed',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 13,
-                                                  color: Color(0xFF737373),
-                                                ),
-                                                child: Text('분당')),
-                                          ),
-                                          RichText(
-                                            text: TextSpan(
-                                              //text: '${NumberFormat('#,###').format((elapsedTime.inMinutes > 0 ? hourlyWage * elapsedTime.inMinutes / 60 : 0).toInt())}',
-                                              text:
-                                                  '${NumberFormat('#,###').format((hourlyWage / 60).toInt())}',
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                                color: Color(0xFF000000),
-                                              ),
-                                              children: [
-                                                TextSpan(
-                                                  text: '원',
-                                                  style: GoogleFonts.getFont(
-                                                    'Roboto Condensed',
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 13,
-                                                    height: 1.3,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                  TextSpan(
+                                    text: '원 ',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      height: 1.3,
+                                      color: Color(0xFF98A2FF),
                                     ),
                                   ),
-                                  Container(
-                                    width: 2,
-                                    height: 40,
-                                    margin: EdgeInsets.fromLTRB(4, 12, 4, 0),
-                                    color: Colors.white,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 7, 0, 13),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                17, 0, 6.7, 6),
-                                            child: DefaultTextStyle(
-                                              style: GoogleFonts.getFont(
-                                                'Roboto Condensed',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13,
-                                                color: Color(0xFF737373),
-                                              ),
-                                              child: Text('시간당'),
-                                            ),
-                                          ),
-                                          Center(
-                                              child: Container(
-                                            padding: EdgeInsets.only(left: 10),
-                                            child: RichText(
-                                              text: TextSpan(
-                                                //text:'${NumberFormat('#,###').format((elapsedTime.inHours > 0 ? hourlyWage * elapsedTime.inHours : hourlyWage).toInt())}',
-                                                text:
-                                                    '${NumberFormat('#,###').format(hourlyWage.toInt())}',
-                                                style: GoogleFonts.getFont(
-                                                  'Roboto Condensed',
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16,
-                                                  color: Color(0xFF000000),
-                                                ),
-                                                children: [
-                                                  TextSpan(
-                                                    text: '원',
-                                                    style: GoogleFonts.getFont(
-                                                      'Roboto Condensed',
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 13,
-                                                      height: 1.3,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ))
-                                        ],
-                                      ),
+                                  TextSpan(
+                                    text: '/ 600,000원',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Color(0xFF000000),
                                     ),
                                   ),
                                 ],
@@ -631,250 +830,238 @@ class _bunnyPageWidgetState extends State<Bunny> {
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              color: Color(0xFF262626),
-                            ),
-                            child: Text(
-                              '이 주의 버니',
-                            )),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Color(0xFFB7B7B7),
-                            ),
-                            child: Text(
-                              _timeStringWeekday,
-                            )),
-                      ),
-                    ],
                   ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(24, 0, 24, 45),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.07),
-                      offset: Offset(0, 0),
-                      blurRadius: 24,
-                      spreadRadius: 3,
-                    ),
-                  ],
-                ),
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(3, 0, 2.9, 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 6.5, 0),
-                              child: SizedBox(
-                                width: 265.5,
-                                child: Text(
-                                  '월',
-                                  style: GoogleFonts.getFont(
-                                    'Roboto Condensed',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11,
-                                    color: Color(0xFF737373),
-                                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: Color(0xFF262626),
                                 ),
-                              ),
-                            ),
-                            Text(
-                              '금',
+                                child: Text('이 달의 버니')),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                            child: DefaultTextStyle(
                               style: GoogleFonts.getFont(
                                 'Roboto Condensed',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                                color: Color(0xFF737373),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: Color(0xFFB7B7B7),
                               ),
+                              child: Text(_timeStringDay + '일'
+                                  // '5월',
+                                  ),
                             ),
-                          ],
-                        ),
-                      ),
-                      GradientSlider(
-                        initialValue: _weekdaySliderValue,
-                        minValue: 0,
-                        maxValue: 4, // 주중 슬라이더의 최대값을 4로 설정
-                        divisions: 4,
-                        onChanged: (value) {
-                          setState(() {
-                            _weekdaySliderValue = value;
-                          });
-                        },
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(108.6, 0, 0, 0),
-                        child: RichText(
-                          text: TextSpan(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                              color: Color(0xFF000000),
-                            ),
-                            children: [
-                              TextSpan(
-                                // text: '540,387',
-                                text:
-                                    '${NumberFormat('#,###').format((((_weekdaySliderValue + 1) * (hourlyWage * 9).toInt())))}',
-
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                  height: 1.3,
-                                  color: Color(0xFF98A2FF),
-                                ),
-                              ),
-                              TextSpan(
-                                text: '원 ',
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  height: 1.3,
-                                  color: Color(0xFF98A2FF),
-                                ),
-                              ),
-                              TextSpan(
-                                text: '/ 600,000원',
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  color: Color(0xFF000000),
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 1.8, 1),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              color: Color(0xFF262626),
-                            ),
-                            child: Text('이 달의 버니')),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
-                        child: DefaultTextStyle(
-                          style: GoogleFonts.getFont(
-                            'Roboto Condensed',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            color: Color(0xFFB7B7B7),
-                          ),
-                          child: Text(_timeStringDay + '일'
-                              // '5월',
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(24, 0, 24, 45),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.07),
-                      offset: Offset(0, 0),
-                      blurRadius: 24,
-                      spreadRadius: 3,
                     ),
-                  ],
-                ),
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(3, 0, 3, 7),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 1, 6.5, 0),
-                                    child: SizedBox(
-                                      width: 254.5,
-                                      child: Text(
-                                        '1일',
-                                        style: GoogleFonts.getFont(
-                                          'Roboto Condensed',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 11,
-                                          color: Color(0xFF737373),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(24, 0, 24, 45),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color(0xFFFFFFFF),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.07),
+                          offset: Offset(0, 0),
+                          blurRadius: 24,
+                          spreadRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(3, 0, 3, 7),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 1, 6.5, 0),
+                                        child: SizedBox(
+                                          width: 254.5,
+                                          child: Text(
+                                            '1일',
+                                            style: GoogleFonts.getFont(
+                                              'Roboto Condensed',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 11,
+                                              color: Color(0xFF737373),
+                                            ),
+                                          ),
                                         ),
                                       ),
+                                      Container(
+                                        margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                        child: Text(
+                                          '31일',
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 11,
+                                            color: Color(0xFF737373),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                GradientSlider(
+                                  initialValue: _monthSliderValue,
+                                  minValue: 0,
+                                  maxValue: 30,
+                                  divisions: 30,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _monthSliderValue = value;
+                                    });
+                                  },
+                                  labelFormatter: _dateLabelFormatter,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: GoogleFonts.getFont(
+                                        'Roboto Condensed',
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        color: Color(0xFF000000),
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${NumberFormat('#,###').format(((_monthSliderValue + 1) * (hourlyWage * 9).toInt()))}',
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                            height: 1.3,
+                                            color: Color(0xFF98A2FF),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '원 ',
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                            height: 1.3,
+                                            color: Color(0xFF98A2FF),
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '/ 2,400,000원',
+                                          style: GoogleFonts.getFont(
+                                            'Roboto Condensed',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                            color: Color(0xFF000000),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: Color(0xFF000000),
+                                ),
+                                child: Text('올해의 버니')),
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
+                            child: DefaultTextStyle(
+                                style: GoogleFonts.getFont(
+                                  'Roboto Condensed',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Color(0xFFB7B7B7),
+                                ),
+                                child: Text(_timeStringMonth + '월')),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color(0xFFFFFFFF),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.07),
+                          offset: Offset(0, 0),
+                          blurRadius: 24,
+                          spreadRadius: 3,
+                        ),
+                      ],
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.fromLTRB(3, 0, 3, 7),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 1, 6.5, 0),
+                                  child: SizedBox(
+                                    width: 254.5,
                                     child: Text(
-                                      '31일',
+                                      '1월',
                                       style: GoogleFonts.getFont(
                                         'Roboto Condensed',
                                         fontWeight: FontWeight.w400,
@@ -883,226 +1070,87 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            GradientSlider(
-                              initialValue: _monthSliderValue,
-                              minValue: 0,
-                              maxValue: 30,
-                              divisions: 30,
-                              onChanged: (value) {
-                                setState(() {
-                                  _monthSliderValue = value;
-                                });
-                              },
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
-                              child: RichText(
-                                text: TextSpan(
-                                  style: GoogleFonts.getFont(
-                                    'Roboto Condensed',
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                    color: Color(0xFF000000),
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${NumberFormat('#,###').format(((_monthSliderValue + 1) * (hourlyWage * 9).toInt()))}',
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                        height: 1.3,
-                                        color: Color(0xFF98A2FF),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '원 ',
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        height: 1.3,
-                                        color: Color(0xFF98A2FF),
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '/ 2,400,000원',
-                                      style: GoogleFonts.getFont(
-                                        'Roboto Condensed',
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        color: Color(0xFF000000),
-                                      ),
-                                    ),
-                                  ],
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 15),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 2.4, 1),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              color: Color(0xFF000000),
-                            ),
-                            child: Text('올해의 버니')),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(2, 3, 0, 0),
-                        child: DefaultTextStyle(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Color(0xFFB7B7B7),
-                            ),
-                            child: Text(_timeStringMonth + '월')),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(24, 0, 24, 0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.07),
-                      offset: Offset(0, 0),
-                      blurRadius: 24,
-                      spreadRadius: 3,
-                    ),
-                  ],
-                ),
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(11, 14, 11, 21),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(3, 0, 3, 7),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 1, 6.5, 0),
-                              child: SizedBox(
-                                width: 254.5,
-                                child: Text(
-                                  '1월',
-                                  style: GoogleFonts.getFont(
-                                    'Roboto Condensed',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11,
-                                    color: Color(0xFF737373),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
+                                  child: Text(
+                                    '12월',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 11,
+                                      color: Color(0xFF737373),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 1),
-                              child: Text(
-                                '12월',
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11,
-                                  color: Color(0xFF737373),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      GradientSlider(
-                        initialValue: _yearSliderValue,
-                        minValue: 0,
-                        maxValue: 11,
-                        divisions: 11,
-                        onChanged: (value) {
-                          setState(() {
-                            _yearSliderValue = value;
-                          });
-                        },
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(66.6, 0, 0, 0),
-                        child: RichText(
-                          text: TextSpan(
-                            style: GoogleFonts.getFont(
-                              'Roboto Condensed',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                              color: Color(0xFF000000),
-                            ),
-                            children: [
-                              TextSpan(
-                                text:
-                                    '${NumberFormat('#,###').format(((_yearSliderValue + 1) * (hourlyWage * 9) * _daysInMonth(DateTime.now().year, _yearSliderValue.toInt() + 1)))}',
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16,
-                                  height: 1.3,
-                                  color: Color(0xFF98A2FF),
-                                ),
-                              ),
-                              TextSpan(
-                                text: '원 ',
-                                style: GoogleFonts.getFont(
-                                  'Roboto Condensed',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  height: 1.3,
-                                  color: Color(0xFF98A2FF),
-                                ),
-                              ),
-                              TextSpan(
-                                text: '/ 28,800,000원',
+                          ),
+                          GradientSlider(
+                            initialValue: _yearSliderValue,
+                            minValue: 0,
+                            maxValue: 11,
+                            divisions: 11,
+                            onChanged: (value) {
+                              setState(() {
+                                _yearSliderValue = value;
+                              });
+                            },
+                            labelFormatter: _monthLabelFormatter,
+                          ),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(66.6, 0, 0, 0),
+                            child: RichText(
+                              text: TextSpan(
                                 style: GoogleFonts.getFont(
                                   'Roboto Condensed',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13,
                                   color: Color(0xFF000000),
                                 ),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        '${NumberFormat('#,###').format(((_yearSliderValue + 1) * (hourlyWage * 9) * _daysInMonth(DateTime.now().year, _yearSliderValue.toInt() + 1)))}',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      height: 1.3,
+                                      color: Color(0xFF98A2FF),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '원 ',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      height: 1.3,
+                                      color: Color(0xFF98A2FF),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '/ 28,800,000원',
+                                    style: GoogleFonts.getFont(
+                                      'Roboto Condensed',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Color(0xFF000000),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    )));
+        )));
   }
 }

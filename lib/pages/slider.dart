@@ -89,6 +89,7 @@ class GradientSlider extends StatefulWidget {
   final double maxValue;
   final int divisions;
   final ValueChanged<double>? onChanged;
+  final String Function(double)? labelFormatter;
 
   GradientSlider({
     required this.initialValue,
@@ -96,6 +97,7 @@ class GradientSlider extends StatefulWidget {
     required this.maxValue,
     required this.divisions,
     this.onChanged,
+    this.labelFormatter,
   });
 
   @override
@@ -113,50 +115,54 @@ class _GradientSliderState extends State<GradientSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderThemeData(
-        trackHeight: 15,
-        thumbShape: RoundSliderThumbShape(
-          enabledThumbRadius: 9.0,
-        ),
-        trackShape: CustomTrackShape(
-          activeGradient: LinearGradient(
-            begin: Alignment.centerRight,
-            end: Alignment.centerLeft,
-            colors: [
-              Color(0xFFDECDFF),
-              Color(0xFFBCECFF),
-            ],
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SliderTheme(
+          data: SliderThemeData(
+            trackHeight: 15,
+            thumbShape: RoundSliderThumbShape(
+              enabledThumbRadius: 9.0,
+            ),
+            trackShape: CustomTrackShape(
+              activeGradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: [
+                  Color(0xFFDECDFF),
+                  Color(0xFFBCECFF),
+                ],
+              ),
+              inactiveColor: Color(0xFFF6F6F6),
+            ),
+            showValueIndicator: ShowValueIndicator.always,
+            valueIndicatorTextStyle: TextStyle(
+              color: const Color.fromARGB(255, 75, 75, 75),
+              fontSize: 14.0,
+            ),
+            // valueIndicatorColor: Colors.blue, // Value indicator 배경색 설정
           ),
-          inactiveColor: Color(0xFFF6F6F6),
+          child: Slider(
+            value: _sliderValue,
+            onChanged: (newValue) {
+              setState(() {
+                _sliderValue = newValue;
+                if (widget.onChanged != null) {
+                  widget.onChanged!(_sliderValue);
+                }
+              });
+            },
+            min: widget.minValue,
+            max: widget.maxValue,
+            divisions: widget.divisions,
+            activeColor: Colors.white,
+            inactiveColor: Colors.white,
+            label: widget.labelFormatter != null
+                ? widget.labelFormatter!(_sliderValue)
+                : _sliderValue.toStringAsFixed(1),
+          ),
         ),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _sliderValue = widget.initialValue;
-            if (widget.onChanged != null) {
-              widget.onChanged!(_sliderValue);
-            }
-          });
-        },
-        child: Slider(
-          value: _sliderValue,
-          onChanged: (newValue) {
-            setState(() {
-              _sliderValue = newValue;
-              if (widget.onChanged != null) {
-                widget.onChanged!(_sliderValue);
-              }
-            });
-          },
-          min: widget.minValue,
-          max: widget.maxValue,
-          divisions: widget.divisions,
-          activeColor: Colors.white,
-          inactiveColor: Colors.white,
-        ),
-      ),
+      ],
     );
   }
 }

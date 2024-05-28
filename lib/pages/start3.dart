@@ -25,104 +25,22 @@ class start3 extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                // children: [
-                //   Container(
-                //     child: Text(
-                //       '9:41',
-                //       style: GoogleFonts.getFont(
-                //         'Roboto Condensed',
-                //         fontWeight: FontWeight.w600,
-                //         fontSize: 17,
-                //         height: 1.3,
-                //         letterSpacing: -0.4,
-                //         color: Color(0xFF000000),
-                //       ),
-                //     ),
-                //   ),
-                //   Container(
-                //     margin: EdgeInsets.fromLTRB(0, 4, 0, 5),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.start,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Container(
-                //           margin: EdgeInsets.fromLTRB(0, 1, 8, 0),
-                //           child: SizedBox(
-                //             width: 18,
-                //             height: 12,
-                //             child: SvgPicture.asset(
-                //               'assets/vectors/icon_mobile_signal_7_x2.svg',
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           margin: EdgeInsets.fromLTRB(0, 1, 7, 0.2),
-                //           child: SizedBox(
-                //             width: 17,
-                //             height: 11.8,
-                //             child: SvgPicture.asset(
-                //               'assets/vectors/wifi_9_x2.svg',
-                //             ),
-                //           ),
-                //         ),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Container(
-                //               margin: EdgeInsets.fromLTRB(0, 0, 1, 0),
-                //               child: Container(
-                //                 decoration: BoxDecoration(
-                //                   color: Color(0xFF1C1C1E),
-                //                   borderRadius: BorderRadius.circular(4),
-                //                 ),
-                //                 child: Container(
-                //                   padding: EdgeInsets.fromLTRB(7.4, 0, 7.4, 0),
-                //                   child: Text(
-                //                     '70',
-                //                     style: GoogleFonts.getFont(
-                //                       'Roboto Condensed',
-                //                       fontWeight: FontWeight.w700,
-                //                       fontSize: 10,
-                //                       height: 1.3,
-                //                       letterSpacing: 0.1,
-                //                       color: Color(0xFFFFFFFF),
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //             Container(
-                //               margin: EdgeInsets.fromLTRB(0, 5, 0, 3.8),
-                //               child: SizedBox(
-                //                 width: 1.4,
-                //                 height: 4.2,
-                //                 child: SvgPicture.asset(
-                //                   'assets/vectors/battery_end_1_x2.svg',
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ],
+               
               ),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(5.5, 0, 5.5, 15),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  '반갑습니다. 홍길동 님. ',
+                child: DefaultTextStyle(
+                  
                   style: GoogleFonts.getFont(
                     'Roboto Condensed',
                     fontWeight: FontWeight.w700,
                     fontSize: 20,
                     letterSpacing: -0.5,
                     color: Color(0xFF000000),
-                  ),
+                  ),child: Text('반갑습니다. 홍길동 님. '),
                 ),
               ),
             ),
@@ -130,13 +48,14 @@ class start3 extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(5.5, 0, 5.5, 41),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  '수령하시는 급여와 근무시간을 알려주세요.',
+                child: DefaultTextStyle(
                   style: GoogleFonts.getFont(
                     'Roboto Condensed',
                     fontWeight: FontWeight.w500,
                     fontSize: 13,
                     color: Color(0xFF808080),
+                  ),child: Text(
+                  '수령하시는 급여와 근무시간을 알려주세요.'
                   ),
                 ),
               ),
@@ -145,13 +64,14 @@ class start3 extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(5.5, 0, 5.5, 9),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  '기준',
+                child: DefaultTextStyle(
                   style: GoogleFonts.getFont(
                     'Roboto Condensed',
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
                     color: Color(0xFF000000),
+                  ),child: Text(
+                  '기준'
                   ),
                 ),
               ),
@@ -192,74 +112,6 @@ class start3 extends StatelessWidget {
                 ),
               ),
             ),
-            // Container(
-            //   margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 28),
-            //   decoration: BoxDecoration(
-            //     border: Border.all(color: Color(0xFFE7E7E7)),
-            //     borderRadius: BorderRadius.circular(10),
-            //     color: Color(0xFFFFFFFF),
-            //   ),
-            //   child: Container(
-            //     padding: EdgeInsets.fromLTRB(15, 17, 15, 15),
-            //     child: Text(
-            //       '월급',
-            //       style: GoogleFonts.getFont(
-            //         'Roboto Condensed',
-            //         fontWeight: FontWeight.w500,
-            //         fontSize: 15,
-            //         color: Color(0xFF808080),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-// Container(
-//                         margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 27),
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Expanded(
-//                               child: Container(
-//                                 margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-//                                 decoration: BoxDecoration(
-//                                   border: Border.all(color: Color(0xFFE7E7E7)),
-//                                   borderRadius: BorderRadius.circular(10),
-//                                   color: Color(0xFFFFFFFF),
-//                                 ),
-//                                 height: 60,
-//                                 child: Container(
-//                                   padding: EdgeInsets.fromLTRB(18.4, 16, 6, 16),
-//                                   child: TextField(
-//                                     onChanged: (text) {
-//                                       // 입력 로직
-//                                     },
-//                                     style: GoogleFonts.getFont(
-//                                       'Roboto Condensed',
-//                                       fontWeight: FontWeight.w500,
-//                                       fontSize: 15,
-//                                       color: Color(0xFF808080),
-//                                     ),
-//                                     decoration: InputDecoration(
-//                                       border: InputBorder.none,
-//                                       contentPadding:
-//                                           EdgeInsets.symmetric(vertical: 8),
-//                                       hintText:
-//                                           '성별을 입력하세요.', // 사용자에게 힌트를 제공할 수 있습니다.
-//                                       hintStyle: GoogleFonts.getFont(
-//                                         'Roboto Condensed',
-//                                         fontWeight: FontWeight.w500,
-//                                         fontSize: 15,
-//                                         color: Color(0xFF808080),
-//                                       ),
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
             Container(
               margin: EdgeInsets.fromLTRB(5.5, 0, 18.4, 27),
               decoration: BoxDecoration(
