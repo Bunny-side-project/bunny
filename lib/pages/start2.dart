@@ -379,7 +379,7 @@ class start2 extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => start3()),
+                                      builder: (context) => const start3()),
                                 );
                               },
                               child: Text(
