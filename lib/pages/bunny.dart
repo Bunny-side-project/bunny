@@ -128,7 +128,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
     final DateTime now =
         DateTime.now().toUtc().add(Duration(hours: 9)); //힌국시간으로 변환
     final DateTime startTime =
-        DateTime(now.year, now.month, now.day, 9); //시작 9시
+        DateTime(now.year, now.month, now.day, 9, 30); //시작 9시 30
     final DateTime endTime =
         DateTime(now.year, now.month, now.day, 18); //종료 18시
 
@@ -281,7 +281,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => save()),
+                                                  builder: (context) => Save()),
                                             );
                                           },
                                           child: Container(
@@ -418,8 +418,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                             color: Color(0xFF000000),
                                           ),
                                           child: Text(
-                                              // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
-                                              '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분')),
+                                              '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분 ${elapsedTime.inSeconds.remainder(60)}초',
+                                              // '${elapsedTime.inHours}시간 ${elapsedTime.inMinutes.remainder(60)}분'
+                                              )),
                                     ),
                                     Container(
                                       margin: EdgeInsets.fromLTRB(50, 0, 50, 0),

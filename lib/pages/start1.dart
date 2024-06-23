@@ -45,7 +45,6 @@ class start1 extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    
                   ),
                 ),
                 Container(
@@ -74,26 +73,25 @@ class start1 extends StatelessWidget {
                 //     ),
                 //   ),
                 // ),
-Container(
-  margin: EdgeInsets.fromLTRB(0, 0, 12.9, 70),
-  decoration: BoxDecoration(
-    boxShadow: [
-      BoxShadow(
-        color: Colors.white,
-        blurRadius: 70.0,
-        spreadRadius: 2.0,
-        offset: Offset(2, 2),
-      ),
-    ],
-  ),
-  child: SvgPicture.asset(
-    'assets/bunnyIcons/Vector.svg',
-    width: 70,
-    height: 71,
-  ),
-),
-
-
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 30, 12.9, 27),
+                  // decoration: BoxDecoration(
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       color: Colors.white,
+                  //       blurRadius: 70.0,
+                  //       spreadRadius: 2.0,
+                  //       offset: Offset(2, 2),
+                  //     ),
+                  //   ],
+                  // ),
+                  child: SvgPicture.asset(
+                    'assets/bunnyIcons/Vector.svg',
+                    width: 70,
+                    height: 71,
+                    color: Colors.white,
+                  ),
+                ),
 
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 11.9, 6),
@@ -110,7 +108,7 @@ Container(
                   ),
                 ),
                 SizedBox(
-                  height: 50.0,
+                  height: 70.0,
                 ),
                 TextButton(
                   onPressed: () {

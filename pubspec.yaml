@@ -13,6 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   intl: ^0.19.0  # 요일 표기 위해 추가
+  table_calendar: ^3.1.1
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +25,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+  - assets/bunnyIcons/Group_158.svg
+  - assets/bunnyIcons/BunnyImgSvg.svg
   - assets/bunnyIcons/Vector.svg
   - assets/images/free_icon_cloud_7280692.png
   - assets/vectors/group_260_x2.svg
@@ -75,4 +78,144 @@ flutter:
   - assets/vectors/icon_mobile_signal_x2.svg
   - assets/vectors/battery_end_6_x2.svg
   - assets/vectors/wifi_1_x2.svg
+
+  - assets/vectors/wifi_9_x2.svg
+  - assets/vectors/icon_mobile_signal_15_x2.svg
+  - assets/vectors/vector_x2.svg
+  - assets/vectors/vector_8_x2.svg
+  - assets/vectors/group_299_x2.svg
+  - assets/vectors/battery_end_14_x2.svg
+  - assets/vectors/vector_17_x2.svg
+  - assets/vectors/vector_3_x2.svg
+  - assets/vectors/vector_5_x2.svg
+  - assets/vectors/vector_12_x2.svg
+  - assets/vectors/icon_mobile_signal_8_x2.svg
+  - assets/vectors/wifi_3_x2.svg
+  - assets/vectors/battery_end_15_x2.svg
+  - assets/vectors/group_43_x2.svg
+  - assets/vectors/icon_mobile_signal_3_x2.svg
+  - assets/vectors/wifi_14_x2.svg
+  - assets/vectors/battery_end_10_x2.svg
+  - assets/images/free_icon_cloud_7280694.png
+  - assets/vectors/group_1571_x2.svg
+  - assets/vectors/layer_19_x2.svg
+  - assets/vectors/vector_4_x2.svg
+  - assets/vectors/battery_end_2_x2.svg
+  - assets/vectors/group_158_x2.svg
+  - assets/vectors/vector_11_x2.svg
+  - assets/vectors/union_x2.svg
+  - assets/vectors/vector_21_x2.svg
+  - assets/vectors/container_3_x2.svg
+  - assets/vectors/wifi_7_x2.svg
+  - assets/vectors/group_2601_x2.svg
+  - assets/vectors/icon_mobile_signal_4_x2.svg
+  - assets/vectors/group_1584_x2.svg
+  - assets/vectors/group_1566_x2.svg
+  - assets/vectors/layer_14_x2.svg
+  - assets/vectors/group_1564_x2.svg
+  - assets/vectors/layer_11_x2.svg
+  - assets/images/free_icon_cloud_7280694.png
+  - assets/vectors/vector_13_x2.svg
+  - assets/vectors/battery_end_9_x2.svg
+  - assets/vectors/layer_16_x2.svg
+  - assets/vectors/layer_13_x2.svg
+  - assets/vectors/group_2822_x2.svg
+  - assets/vectors/group_1582_x2.svg
+  - assets/vectors/vector_2_x2.svg
+  - assets/vectors/group_2602_x2.svg
+  - assets/vectors/layer_115_x2.svg
+  - assets/vectors/group_1563_x2.svg
+  - assets/vectors/icon_mobile_signal_7_x2.svg
+  - assets/vectors/vector_15_x2.svg
+  - assets/vectors/vector_9_x2.svg
+  - assets/vectors/group_1573_x2.svg
+  - assets/vectors/wifi_12_x2.svg
+  - assets/vectors/container_4_x2.svg
+  - assets/vectors/layer_112_x2.svg
+  - assets/vectors/group_1586_x2.svg
+  - assets/vectors/union_2_x2.svg
+  - assets/vectors/group_1562_x2.svg
+  # - assets/images/image_12.png
+  - assets/images/free_icon_cloud_7280694.png
+  - assets/vectors/group_1583_x2.svg
+  - assets/vectors/group_156_x2.svg
+  - assets/vectors/group_268_x2.svg
+  - assets/vectors/group_269_x2.svg
+  - assets/vectors/vector_20_x2.svg
+  - assets/vectors/battery_end_13_x2.svg
+  - assets/vectors/group_1581_x2.svg
+  - assets/vectors/layer_110_x2.svg
+  - assets/vectors/icon_mobile_signal_14_x2.svg
+  - assets/vectors/layer_17_x2.svg
+  - assets/vectors/group_260_x2.svg
+  - assets/vectors/vector_1_x2.svg
+  - assets/vectors/layer_113_x2.svg
+  - assets/vectors/vector_19_x2.svg
+  - assets/vectors/union_4_x2.svg
+  - assets/vectors/container_x2.svg
+  - assets/vectors/group_1572_x2.svg
+  - assets/vectors/group_270_x2.svg
+  - assets/vectors/group_1567_x2.svg
+  - assets/vectors/group_282_x2.svg
+  - assets/vectors/layer_12_x2.svg
+  - assets/vectors/vector_7_x2.svg
+  - assets/vectors/wifi_10_x2.svg
+  - assets/vectors/group_284_x2.svg
+  - assets/vectors/icon_mobile_signal_1_x2.svg
+  - assets/vectors/battery_end_5_x2.svg
+  - assets/vectors/wifi_4_x2.svg
+  - assets/vectors/icon_mobile_signal_9_x2.svg
+  - assets/vectors/battery_end_1_x2.svg
+  - assets/vectors/wifi_15_x2.svg
+  - assets/vectors/wifi_5_x2.svg
+  - assets/vectors/battery_end_16_x2.svg
+  - assets/vectors/icon_mobile_signal_12_x2.svg
+  - assets/images/free_icon_cloud_7280694.png
+  - assets/vectors/container_1_x2.svg
+  - assets/vectors/union_3_x2.svg
+  - assets/vectors/layer_15_x2.svg
+  - assets/vectors/wifi_6_x2.svg
+  - assets/vectors/container_5_x2.svg
+  - assets/vectors/vector_16_x2.svg
+  - assets/vectors/battery_end_11_x2.svg
+  - assets/vectors/icon_mobile_signal_13_x2.svg
+  - assets/vectors/layer_18_x2.svg
+  - assets/vectors/battery_end_6_x2.svg
+  - assets/vectors/wifi_2_x2.svg
+  - assets/vectors/icon_mobile_signal_x2.svg
+  - assets/vectors/wifi_11_x2.svg
+  - assets/vectors/battery_end_8_x2.svg
+  - assets/vectors/vector_23_x2.svg
+  - assets/vectors/icon_mobile_signal_11_x2.svg
+  - assets/vectors/battery_end_7_x2.svg
+  - assets/vectors/vector_22_x2.svg
+  - assets/vectors/wifi_8_x2.svg
+  - assets/vectors/layer_111_x2.svg
+  - assets/vectors/icon_mobile_signal_10_x2.svg
+  - assets/vectors/group_371_x2.svg
+  - assets/vectors/group_210_x2.svg
+  - assets/images/free_icon_cloud_7280694.png
+  - assets/vectors/group_1565_x2.svg
+  - assets/vectors/container_2_x2.svg
+  - assets/vectors/group_257_x2.svg
+  - assets/vectors/group_1585_x2.svg
+  - assets/vectors/group_157_x2.svg
+  - assets/vectors/battery_end_12_x2.svg
+  - assets/vectors/layer_114_x2.svg
+  - assets/vectors/layer_1_x2.svg
+  - assets/vectors/wifi_x2.svg
+  - assets/vectors/group_1561_x2.svg
+  - assets/vectors/vector_18_x2.svg
+  - assets/vectors/vector_6_x2.svg
+  - assets/vectors/union_1_x2.svg
+  - assets/vectors/container_6_x2.svg
+  - assets/vectors/group_2603_x2.svg
+  - assets/vectors/vector_14_x2.svg
+  - assets/vectors/vector_10_x2.svg
+  - assets/vectors/group_2821_x2.svg
+  - assets/vectors/group_1587_x2.svg
+  - assets/vectors/icon_mobile_signal_5_x2.svg
+  - assets/vectors/wifi_13_x2.svg
+  - assets/vectors/battery_end_3_x2.svg
+  - assets/vectors/icon_mobile_signal_2_x2.svg
 
