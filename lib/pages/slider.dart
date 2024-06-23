@@ -115,9 +115,7 @@ class _GradientSliderState extends State<GradientSlider> {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderThemeData(
-        // thumbColor: Colors.black,
         trackHeight: 15,
-        // overlayColor: Colors.black,
         thumbShape: RoundSliderThumbShape(
           enabledThumbRadius: 9.0,
         ),
@@ -132,24 +130,32 @@ class _GradientSliderState extends State<GradientSlider> {
           ),
           inactiveColor: Color(0xFFF6F6F6),
         ),
-        // overlayShape: RoundSliderOverlayShape(overlayRadius: 0), // 직선을 그리도록 설정
       ),
-      child: Slider(
-        value: _sliderValue,
-        onChanged: (newValue) {
+      child: GestureDetector(
+        onTap: () {
           setState(() {
-            _sliderValue = newValue;
+            _sliderValue = widget.initialValue;
             if (widget.onChanged != null) {
               widget.onChanged!(_sliderValue);
             }
           });
         },
-        // label: '${_sliderValue.toInt()}%',
-        min: widget.minValue,
-        max: widget.maxValue,
-        divisions: widget.divisions,
-        activeColor: Colors.white, // 활성화된 부분의 색상
-        inactiveColor: Colors.white, // 비활성화된 부분의 색상
+        child: Slider(
+          value: _sliderValue,
+          onChanged: (newValue) {
+            setState(() {
+              _sliderValue = newValue;
+              if (widget.onChanged != null) {
+                widget.onChanged!(_sliderValue);
+              }
+            });
+          },
+          min: widget.minValue,
+          max: widget.maxValue,
+          divisions: widget.divisions,
+          activeColor: Colors.white,
+          inactiveColor: Colors.white,
+        ),
       ),
     );
   }

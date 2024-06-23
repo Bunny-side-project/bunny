@@ -35,44 +35,42 @@ class _bunnyPageWidgetState extends State<Bunny> {
   Duration remainingTime = Duration(hours: 9); // 남은 시간 (오후 6시까지)
   double hourlyWage = 9860; //시간당 급여
   double _sliderValue = 0.0;
-  int workingHour = 0; // 근무 시간 추가 (sharedPreference 객체로 바꿔야 함, 만드는 중)
 
-  double _getInitialSliderValue() {
-    // 현재 요일에 해당하는 숫자를 반환
-    int weekdayNumber = _getWeekdayNumber(_timeStringWeekday);
-    if (weekdayNumber == 1) {
-      // 월요일이면 슬라이더의 최솟값 반환
+double _getInitialSliderValue() {
+  // 현재 요일에 해당하는 숫자를 반환
+  int weekdayNumber = _getWeekdayNumber(_timeStringWeekday);
+  if (weekdayNumber == 1) {
+    // 월요일이면 슬라이더의 최솟값 반환
+    return 0;
+  } else if (weekdayNumber >= 6) {
+    // 토요일 또는 일요일이면 슬라이더의 최댓값 반환
+    return 100;
+  } else {
+    // 그 외의 경우에는 슬라이더의 값이 0과 100 사이에 있도록 조정
+    return ((weekdayNumber - 1) / 6) * 100;
+  }
+}
+
+int _getWeekdayNumber(String weekday) {
+  switch (weekday) {
+    case '월요일':
+      return 1;
+    case '화요일':
+      return 2;
+    case '수요일':
+      return 3;
+    case '목요일':
+      return 4;
+    case '금요일':
+      return 5;
+    case '토요일':
+      return 6;
+    case '일요일':
+      return 7;
+    default:
       return 0;
-    } else if (weekdayNumber >= 6) {
-      // 토요일 또는 일요일이면 슬라이더의 최댓값 반환
-      return 100;
-    } else {
-      // 그 외의 경우에는 슬라이더의 값이 0과 100 사이에 있도록 조정
-      return ((weekdayNumber - 1) / 6) * 100;
-    }
   }
-
-  int _getWeekdayNumber(String weekday) {
-    switch (weekday) {
-      case '월요일':
-        return 1;
-      case '화요일':
-        return 2;
-      case '수요일':
-        return 3;
-      case '목요일':
-        return 4;
-      case '금요일':
-        return 5;
-      case '토요일':
-        return 6;
-      case '일요일':
-        return 7;
-      default:
-        return 0;
-    }
-  }
-
+}
   @override
   void initState() {
     // 현재 시간을 가져와 문자열로 변환
@@ -87,6 +85,9 @@ class _bunnyPageWidgetState extends State<Bunny> {
     _updateTime();
     _timer = Timer.periodic(Duration(seconds: 1), (Timer t) => _updateTime());
 
+    _weekdaySliderValue = _getWeekdayInitialSliderValue();
+    _monthSliderValue = _getMonthInitialSliderValue();
+    _yearSliderValue = _getYearInitialSliderValue();
     // 1초마다 percentage를 1씩 증가시키는 타이머
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -97,6 +98,25 @@ class _bunnyPageWidgetState extends State<Bunny> {
         }
       });
     });
+  }
+
+  double _getWeekdayInitialSliderValue() {
+    int weekdayNumber = DateTime.now().weekday;
+    // 월요일(1)부터 금요일(5)까지의 값만 허용
+    if (weekdayNumber >= 1 && weekdayNumber <= 5) {
+      return weekdayNumber.toDouble() - 1; // 요일에 따라 0부터 4까지 반환
+    }
+    return 0.0; // 주말일 경우 초기값을 0으로 설정
+  }
+
+  double _getMonthInitialSliderValue() {
+    DateTime now = DateTime.now();
+    return (now.day - 1).toDouble().clamp(0.0, 30.0);
+  }
+
+  double _getYearInitialSliderValue() {
+    DateTime now = DateTime.now();
+    return now.month.toDouble();
   }
 
   @override
@@ -175,6 +195,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         home: Scaffold(
             body: SingleChildScrollView(
       child: Container(
@@ -734,14 +755,13 @@ class _bunnyPageWidgetState extends State<Bunny> {
                         ),
                       ),
                       GradientSlider(
-                        // 이 주의 버니 (요일) 슬라이더
                         initialValue: _getInitialSliderValue(),
                         minValue: 0,
-                        maxValue: 100,
-                        divisions: 5,
+                        maxValue: 4, // 주중 슬라이더의 최대값을 4로 설정
+                        divisions: 4,
                         onChanged: (value) {
                           setState(() {
-                            _sliderValue = value;
+                            _weekdaySliderValue = value;
                           });
                         },
                       ),
@@ -758,8 +778,7 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             children: [
                               TextSpan(
                                 // text: '540,387',
-                                text: // 연우 피드백: 숫자 계산이 이상함, 조정 필요함
-                                    // '${NumberFormat('#,###').format((_sliderValue + 1) * (hourlyWage * 9).toInt())}',
+                                text:
                                     '${NumberFormat('#,###').format((_sliderValue + 1) * (hourlyWage * 9).toInt())}',
 
                                 style: GoogleFonts.getFont(
@@ -897,10 +916,15 @@ class _bunnyPageWidgetState extends State<Bunny> {
                               ),
                             ),
                             GradientSlider(
-                              initialValue: 10.0,
+                              initialValue: _monthSliderValue,
                               minValue: 0,
-                              maxValue: 100,
+                              maxValue: 30,
                               divisions: 30,
+                              onChanged: (value) {
+                                setState(() {
+                                  _monthSliderValue = value;
+                                });
+                              },
                             ),
                             Container(
                               margin: EdgeInsets.fromLTRB(22, 0, 22, 0),
@@ -914,7 +938,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: '1,540,387',
+                                      text:
+                                          '${NumberFormat('#,###').format(((_monthSliderValue + 1) * (hourlyWage * 9).toInt()))}',
                                       style: GoogleFonts.getFont(
                                         'Roboto Condensed',
                                         fontWeight: FontWeight.w600,
@@ -1044,10 +1069,15 @@ class _bunnyPageWidgetState extends State<Bunny> {
                         ),
                       ),
                       GradientSlider(
-                        initialValue: 10.0,
+                        initialValue: _yearSliderValue,
                         minValue: 0,
-                        maxValue: 100,
-                        divisions: 12,
+                        maxValue: 11,
+                        divisions: 11,
+                        onChanged: (value) {
+                          setState(() {
+                            _yearSliderValue = value;
+                          });
+                        },
                       ),
                       Container(
                         margin: EdgeInsets.fromLTRB(66.6, 0, 0, 0),
@@ -1061,7 +1091,8 @@ class _bunnyPageWidgetState extends State<Bunny> {
                             ),
                             children: [
                               TextSpan(
-                                text: '12,540,387',
+                                text:
+                                    '${NumberFormat('#,###').format(((_yearSliderValue + 1) * (hourlyWage * 9) * _daysInMonth(DateTime.now().year, _yearSliderValue.toInt() + 1)))}',
                                 style: GoogleFonts.getFont(
                                   'Roboto Condensed',
                                   fontWeight: FontWeight.w600,
